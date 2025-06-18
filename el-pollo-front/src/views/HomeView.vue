@@ -12,6 +12,8 @@ import { useConsumableStore } from '@/stores/consumableStore';
 const consuStore = useConsumableStore();
 
 const testAppel = () => {
-  consuStore.getAllConsumable();
+  consuStore.getAllConsumable().then(() => {
+    console.log(consuStore.allDrinks[0]);
+  })
 }
 </script>

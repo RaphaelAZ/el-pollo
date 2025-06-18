@@ -17,7 +17,7 @@ export const useConsumableStore = defineStore('consumables', {
     }
   },
   actions: {
-    async getAllConsumable(user: string): Promise<boolean> {
+    async getAllConsumable(): Promise<boolean> {
         try {
           const response = await getHttpClient().get('api/consumables');
           const data = response.data as ConsumableState;
