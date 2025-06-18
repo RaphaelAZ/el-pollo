@@ -1,14 +1,17 @@
-import './assets/main.css'
+// import './assets/main.scss';
+import { createApp } from 'vue';
+import App from './App.vue';
+import vuetify from './plugins/vuetify';
+import pinia from '@/plugins/pinia.ts'
+import router from '@/router'
+import { Icon } from '@iconify/vue';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+const app = createApp(App);
 
-import App from './App.vue'
-import router from './router'
+app.component('Icon', Icon);
 
-const app = createApp(App)
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+app
+  .use(vuetify)
+  .use(pinia)
+  .use(router)
+  .mount('#app');

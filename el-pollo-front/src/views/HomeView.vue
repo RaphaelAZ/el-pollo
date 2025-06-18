@@ -2,7 +2,5 @@
 </script>
 
 <template>
-  <main>
-    <h1>Page d'accueil de fou</h1>
-  </main>
+  <h1>Page d'accueil de fou</h1>
 </template>
