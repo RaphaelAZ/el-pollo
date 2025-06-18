@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Consumable } from '@/models/consumable.ts'
-import { onMounted, ref, watch } from 'vue'
+import type { Burger } from '@/models/consumable.ts'
+import { ref, watch } from 'vue'
 import { useConsumableStore } from '@/stores/consumableStore';
 import ListItemCard from '@/components/lists/ListItemCard.vue'
 
