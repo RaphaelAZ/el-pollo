@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { getHttpClient } from '@/plugins/http-client'
 import type { Burger, Consumable, Drink } from '@/models/consumable'
 
-interface ConsumableState {
+export interface ConsumableState {
     burgers: Burger[] | null;
     drinks: Drink[] | null;
     others: Consumable[] | null;

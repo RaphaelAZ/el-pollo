@@ -56,6 +56,18 @@
           </template>
           <v-list-item-title v-if="isExpanded">Boissons</v-list-item-title>
         </v-list-item>
+
+        <v-list-item to="/order" rounded="lg">
+          <template #prepend>
+            <Icon
+              icon="emojione:shopping-cart"
+              :width="isExpanded ? 36 : 24"
+              :height="isExpanded ? 36 : 24"
+              class="transition-all duration-300 mr-3"
+            />
+          </template>
+          <v-list-item-title v-if="isExpanded">Commande</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -64,21 +76,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref } from 'vue';
 
 const isExpanded = ref(false);
-
-onMounted(() => {
-  const drawer = document.querySelector('.v-navigation-drawer');
-  if (drawer) {
-    drawer.addEventListener('mouseenter', () => {
-      isExpanded.value = true;
-    });
-    drawer.addEventListener('mouseleave', () => {
-      isExpanded.value = false;
-    });
-  }
-});
 </script>
 
 <style lang="scss" scoped>

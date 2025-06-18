@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <h1>Page d'accueil de fou</h1>
   <v-btn @click="testAppel">LES CONSOMMABLES DE FOU</v-btn>

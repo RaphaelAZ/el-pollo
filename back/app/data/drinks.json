@@ -11,7 +11,7 @@
         "isAlcoholic": false
     },
     {
-        "id": 0,
+        "id": 1,
         "name": "Ice Tea Pêche",
         "description": "Gout Pêche logique",
         "price": 1.95,
@@ -22,7 +22,7 @@
         "isAlcoholic": false
     },
     {
-        "id": 0,
+        "id": 2,
         "name": "Whisky",
         "description": "Il met bien",
         "price": 3,
@@ -33,7 +33,7 @@
         "isAlcoholic": true
     },
     {
-        "id": 0,
+        "id": 3,
         "name": "Orangina",
         "description": "Il est bon celui la",
         "price": 1.65,
@@ -41,6 +41,72 @@
         "available": false,
         "quantity": 0,
         "category": "soda",
+        "isAlcoholic": false
+    },
+    {
+        "id": 4,
+        "name": "Smoothie Chaton Frappé",
+        "description": "Un goût doux et miaulement sucré (aucun chaton n’a été blessé).",
+        "price": 3.75,
+        "image": "",
+        "available": true,
+        "quantity": 7,
+        "category": "smoothie",
+        "isAlcoholic": false
+    },
+    {
+        "id": 5,
+        "name": "Latte Lama Lacté",
+        "description": "Avec ou sans postillons, c’est toi qui choisis.",
+        "price": 2.90,
+        "image": "",
+        "available": true,
+        "quantity": 10,
+        "category": "café",
+        "isAlcoholic": false
+    },
+    {
+        "id": 6,
+        "name": "Cocktail Poulpe Punch",
+        "description": "Huit bras, huit saveurs, zéro dignité.",
+        "price": 4.80,
+        "image": "",
+        "available": true,
+        "quantity": 4,
+        "category": "cocktail",
+        "isAlcoholic": true
+    },
+    {
+        "id": 7,
+        "name": "Soda Canard Frétillant",
+        "description": "Coin-coin pétillant avec une touche de n’importe quoi.",
+        "price": 1.99,
+        "image": "",
+        "available": false,
+        "quantity": 0,
+        "category": "soda",
+        "isAlcoholic": false
+    },
+    {
+        "id": 8,
+        "name": "Thé Tortue Turbo",
+        "description": "Infusé pendant 72 heures pour une lente explosion de saveur.",
+        "price": 2.60,
+        "image": "",
+        "available": true,
+        "quantity": 6,
+        "category": "thé",
+        "isAlcoholic": false
+    },
+    {
+        "id": 9,
+        "name": "Milkshake Mouton Menthe",
+        "description": "Tond ta soif avec une fraîcheur laineuse.",
+        "price": 3.20,
+        "image": "",
+        "available": true,
+        "quantity": 9,
+        "category": "milkshake",
         "isAlcoholic": false
     }
 ]
