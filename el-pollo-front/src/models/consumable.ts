@@ -16,5 +16,6 @@ export interface Consumable {
     imageUrl?: string;
     available?: boolean;
     createdAt?: Date;
-    updatedAt?: Date;   
+    updatedAt?: Date;
+    quantity?: number
 }
