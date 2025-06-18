@@ -1,9 +1,9 @@
 export interface Burger extends Consumable {
     ingredients?: string[],
+    size?: string;
 }
 
 export interface Drink extends Consumable {
-    category?: string;
     isAlcoholic?: boolean;
 }
 
@@ -12,10 +12,8 @@ export interface Consumable {
     name: string,
     description?: string;
     price: number;
-    size?: string;
-    imageUrl?: string;
+    image?: string;
     available?: boolean;
-    createdAt?: Date;
-    updatedAt?: Date;
-    quantity?: number
+    quantity?: number;
+    category?: string;
 }

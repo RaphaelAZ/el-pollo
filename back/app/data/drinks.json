@@ -1,0 +1,46 @@
+[
+    {
+        "id": 0,
+        "name": "Coca",
+        "description": "Il est bien frais",
+        "price": 1.50,
+        "image": "",
+        "available": true,
+        "quantity": 150,
+        "category": "soda",
+        "isAlcoholic": false
+    },
+    {
+        "id": 0,
+        "name": "Ice Tea Pêche",
+        "description": "Gout Pêche logique",
+        "price": 1.95,
+        "image": "",
+        "available": true,
+        "quantity": 68,
+        "category": "soda",
+        "isAlcoholic": false
+    },
+    {
+        "id": 0,
+        "name": "Whisky",
+        "description": "Il met bien",
+        "price": 3,
+        "image": "",
+        "available": true,
+        "quantity": 25,
+        "category": "alcool",
+        "isAlcoholic": true
+    },
+    {
+        "id": 0,
+        "name": "Orangina",
+        "description": "Il est bon celui la",
+        "price": 1.65,
+        "image": "",
+        "available": false,
+        "quantity": 0,
+        "category": "soda",
+        "isAlcoholic": false
+    }
+]

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { getHttpClient } from '@/plugins/http-client'
 import type { Burger, Consumable, Drink } from '@/models/consumable'
 
 interface ConsumableState {
@@ -7,7 +8,7 @@ interface ConsumableState {
     others: Consumable[] | null;
 }
 
-export const useUserStore = defineStore('consumables', {
+export const useConsumableStore = defineStore('consumables', {
   state: (): ConsumableState => {
     return {
       burgers: null,
@@ -16,11 +17,17 @@ export const useUserStore = defineStore('consumables', {
     }
   },
   actions: {
-    getAllConsumable(user: string): void {
+    async getAllConsumable(user: string): Promise<boolean> {
         try {
-            //   this.burgers = TODO: Appel API Burgers Axios
-        } catch(e) {
-            console.error(e);
+          const response = await getHttpClient().get('api/consumables');
+          const data = response.data as ConsumableState;
+          this.burgers = data.burgers;
+          this.drinks = data.drinks;
+          return true;
+        }
+        catch(error) {
+          console.log(error)
+          return false;
         }
     }
   },
