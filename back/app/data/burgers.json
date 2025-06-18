@@ -6,6 +6,7 @@
     "image": "https://foodish-api.com/images/burger/burger1.jpg",
     "restaurant": "Honest Burgers",
     "web": "www.honestburgers.co.uk",
+    "available": false,
     "description": "A mouth-watering honest beef burger",
     "ingredients": [
       "beef",
@@ -33,6 +34,7 @@
     "price": 24.36,
     "image": "https://foodish-api.com/images/burger/burger50.jpg",
     "description": "Spicy vegan burger with jackfruit",
+    "available": true,
     "ingredients": [
       "jackfruit",
       "coleslaw",
@@ -45,6 +47,7 @@
     "price": 22.81,
     "image": "https://foodish-api.com/images/burger/burger61.jpg",
     "description": "The only people who don't like a Krabby Patty have never tasted one.",
+    "available": true,
     "ingredients": [
       "bun",
       "patty",
@@ -64,6 +67,7 @@
     "price": 8.08,
     "image": "https://foodish-api.com/images/burger/burger78.jpg",
     "description": "Welcome to Good Burger, home of the Good Burger, can I take your order?",
+    "available": true,
     "ingredients": [
       "bun",
       "tomato",
@@ -79,6 +83,7 @@
     "price": 15.69,
     "image": "https://foodish-api.com/images/burger/burger52.jpg",
     "description": "The best combination of crunchiness and softness, all in one single burger",
+    "available": false,
     "ingredients": [
       "sesame bun",
       "salsa",
@@ -97,6 +102,7 @@
     "price": 19,
     "image": "https://jacksandwaffles.nl/wp-content/uploads/2024/01/WhatsApp-Image-2024-02-01-at-13.23.18-2.jpeg",
     "description": "From a pink explosion was born Barbie Burger, a special edition in partnership with Mattel",
+    "available": true,
     "ingredients": [
       "pink bun",
       "lentil and beetroot burger",
@@ -112,6 +118,7 @@
     "price": 12.69,
     "image": "https://foodish-api.com/images/burger/burger81.jpg",
     "description": "A very tasty beef curry burger !",
+    "available": true,
     "ingredients": [
       "beef",
       "curry",
@@ -124,6 +131,7 @@
     "price": 3.02,
     "image": "https://foodish-api.com/images/burger/burger60.jpg",
     "description": "Fast food joint located in a public toilet? Why on earth?!",
+    "available": true,
     "ingredients": [
       "2 x meat",
       "2 x cheese",
@@ -138,6 +146,7 @@
     "price": 8.85,
     "image": "https://foodish-api.com/images/burger/burger30.jpg",
     "description": "With summer around the corner, I had to share a vegetarian burger recipe with you guys. Actually I plan to share more in the next month but I thought I will start with this Indian style Vegetarian Burger aka Masala Burger!",
+    "available": true,
     "ingredients": [
       "american cheese",
       "burger sauce",
@@ -153,6 +162,7 @@
     "price": 18.22,
     "image": "https://foodish-api.com/images/burger/burger78.jpg",
     "description": "A Christmas themed burger",
+    "available": true,
     "ingredients": [
       "chicken thigh",
       "champagne ham",
@@ -169,6 +179,7 @@
     "price": 17.89 ,
     "image": "https://foodish-api.com/images/burger/burger56.jpg",
     "description": "Delicious steak burger",
+    "available": true,
     "ingredients": [
       "steak",
       "BBQ sauce",
@@ -187,6 +198,7 @@
     "price": 22.41,
     "image": "https://foodish-api.com/images/burger/burger46.jpg",
     "description": "Massive meaty burger - the size of a dinner plate",
+    "available": false,
     "ingredients": [
       "250g patty",
       "bacon",
@@ -206,6 +218,7 @@
     "price": 16.67,
     "image": "https://foodish-api.com/images/burger/burger80.jpg",
     "description": "Large, messy, super tasty buffalo chicken burger",
+    "available": true,
     "ingredients": [
       "Fried chicken breast",
       "House-made buffalo sauce",
@@ -220,6 +233,7 @@
     "price": 24.12,
     "image": "https://foodish-api.com/images/burger/burger10.jpg",
     "description": "Perfect when you need a day off from your workout routine",
+    "available": true,
     "ingredients": [
       "double beef",
       "chilli-cheese sauce",
@@ -236,6 +250,7 @@
     "price": 21.12,
     "image": "https://foodish-api.com/images/burger/burger34.jpg",
     "description": "Beyond Meat patty, crispy onions, mushrooms, pickled red onions, lettuce American mustard, truffle ‘cheese’ fondue, truffle ‘mayo’",
+    "available": true,
     "ingredients": [
       "1/4 Beyond Meat patty",
       "crispy onions",
@@ -253,6 +268,7 @@
     "price": 8.45,
     "image": "https://foodish-api.com/images/burger/burger23.jpg",
     "description": "Haute cuisine meets cravings for cheeseburgers.",
+    "available": false,
     "ingredients": [
       "6oz beef patty, served medium",
       "griddled beaufort cheese",
@@ -267,6 +283,7 @@
     "price": 7.78 ,
     "image": "https://foodish-api.com/images/burger/burger40.jpg",
     "description": "Vegan burger made from whole, natural ingredients.",
+    "available": true,
     "ingredients": [
       "house-made grain burger",
       "bbq sauce",
@@ -283,6 +300,7 @@
     "name": "Carroll's Cheese Burger",
     "price": 23.23,
     "image": "https://foodish-api.com/images/burger/burger43.jpg",
+    "available": true,
     "description": "Tasty black angus beef burger.",
     "ingredients": [
       "Irish black angus beef",
@@ -299,6 +317,7 @@
     "name": "Mojitto Burger",
     "price": 18.83 ,
     "image": "https://foodish-api.com/images/burger/burger11.jpg",
+    "available": true,
     "description": "Burger a day keeps the fat away",
     "ingredients": [
       "bread",
@@ -312,6 +331,7 @@
     "name": "Double Slab Burger",
     "price": 3.89,
     "image": "https://foodish-api.com/images/burger/burger32.jpg",
+    "available": true,
     "description": "taste of hormone-free running cows",
     "ingredients": [
       "beef",
@@ -328,6 +348,7 @@
     "name": "Du Brown",
     "price": 23.13,
     "image": "https://foodish-api.com/images/burger/burger26.jpg",
+    "available": true,
     "description": "Home of the no bullshit burger",
     "ingredients": [
       "beef",
@@ -347,6 +368,7 @@
     "name": "Melting Potes",
     "price": 10.81,
     "image": "https://foodish-api.com/images/burger/burger43.jpg",
+    "available": false,
     "description": "Home of the no bullshit burger",
     "ingredients": [
       "beef",
@@ -362,6 +384,7 @@
     "name": "Big Fernand",
     "price": 18.64 ,
     "image": "https://foodish-api.com/images/burger/burger75.jpg",
+    "available": true,
     "description": "L'atelier du Hamburgé - The burger workshop",
     "ingredients": [
       "beef",
@@ -377,6 +400,7 @@
     "name": "PNY Burger",
     "price": 24.71,
     "image": "https://foodish-api.com/images/burger/burger2.jpg",
+    "available": true,
     "description": "Home of the no bullshit burger",
     "ingredients": [
       "beef",
@@ -392,6 +416,7 @@
     "name": "231 East",
     "price": 23.90,
     "image": "https://foodish-api.com/images/burger/burger77.jpg",
+    "available": true,
     "description": "True New York style burger in France",
     "ingredients": [
       "beef",
@@ -410,6 +435,7 @@
     "name": "Cajun Black Bean Burger",
     "price": 14.04 ,
     "image": "https://foodish-api.com/images/burger/burger44.jpg",
+    "available": true,
     "description": "a hearty veggie burger with a kick that goes great with sweet potato fries",
     "ingredients": [
       "spicy black bean veggie patty",
@@ -427,6 +453,7 @@
     "name": "Hatch Green Chile Bacon Burger",
     "price": 24.03,
     "image": "https://foodish-api.com/images/burger/burger25.jpg",
+    "available": true,
     "description": "burger with hatch green chiles, bacon and cheese",
     "ingredients": [
       "beef",
@@ -441,6 +468,7 @@
     "name": "The Street Burgers and Coctail Bar Prague 1",
     "price": 12.34,
     "image": "https://foodish-api.com/images/burger/burger60.jpg",
+    "available": true,
     "description": "American, Bar, International, European, Vegetarian Friendly",
     "ingredients": [
       "beef",

@@ -44,7 +44,7 @@ const computedAlcoolIcon = computed(() => {
 })
 
 const computedAlcoolText = computed(() => {
-  return (props.item as Drink).isAlcoholic ? 'Alcoolisée' : 'Non Alcolisée'
+  return (props.item as Drink).isAlcoholic ? 'Alcoolisée' : 'Non Alcoolisée'
 })
 
 const computedItemTotal = computed(() => {
@@ -62,8 +62,6 @@ const computedItemTotal = computed(() => {
 
 /** If the burger description overflows */
 const isDescriptionOverFlow = ref<boolean>(false)
-
-const originalItemQuantity: number = props.item.quantity ?? 0
 </script>
 
 <template>

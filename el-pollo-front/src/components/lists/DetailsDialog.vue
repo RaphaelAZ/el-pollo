@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Consumable } from '@/models/consumable.ts'
-import ListItemCard from '@/components/lists/ListItemCard.vue'
+import { type PropType, ref } from 'vue'
+import type { Burger } from '@/models/consumable.ts'
 
 const props = defineProps({
   item: {
@@ -9,7 +8,7 @@ const props = defineProps({
     required: true,
   }
 })
-const burgerDetails = ref<Burge | null>();
+const burgerDetails = ref<Burger | null>();
 
 const emit = defineEmits(['close']);
 </script>
