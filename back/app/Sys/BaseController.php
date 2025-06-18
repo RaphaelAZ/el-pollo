@@ -46,8 +46,15 @@ class BaseController
         return json_decode($fileContents, $associative, JSON_THROW_ON_ERROR);
     }
 
-    protected function respond404()
+    #[NoReturn]
+    protected function respond404(): void
     {
         $this->setGenericHeaders(404);
+        exit(0);
+    }
+
+    protected function getConfig(): Config
+    {
+        return new Config();
     }
 }
