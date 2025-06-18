@@ -8,7 +8,7 @@ interface BasketState {
 export const useBasketStore = defineStore('basket', {
   state: (): BasketState => {
     return {
-        basket: null 
+        basket: []
     }
   },
   actions: {
@@ -26,6 +26,26 @@ export const useBasketStore = defineStore('basket', {
 
     resetBasket(): void {
         this.basket = null;
+    },
+
+    /**
+     * Returns the total of the basket or null if no baskets are available
+     */
+    getTotal(round: boolean = true): number|null {
+      if( !this.basket ) {
+        return null;
+      }
+
+      const rawValue = this.basket.reduce(
+        (accumulator, current) => accumulator + (current.quantity * current.price),
+        0
+      )
+
+      if( round ) {
+        return Math.floor( rawValue * 100 ) / 100
+      }
+
+      return rawValue
     }
   },
   getters: {
@@ -36,7 +56,7 @@ export const useBasketStore = defineStore('basket', {
                 return state.basket!.some(item => item.id.toString() === id);
             }
             return false
-            
+
         }
     }
   },

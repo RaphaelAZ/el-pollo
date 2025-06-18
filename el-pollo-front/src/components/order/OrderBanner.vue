@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, type PropType } from 'vue'
-import type { Consumable } from '@/models/consumable'
+import type { Burger, Drink } from '@/models/consumable'
 import { sIfCount } from '@/utils/string-utils.ts'
 
 const props = defineProps({
   items: {
-    type: Array as PropType<Consumable[]>,
+    type: Array as PropType< (Drink|Burger)[] >,
     required: false,
     default: () => null
   }

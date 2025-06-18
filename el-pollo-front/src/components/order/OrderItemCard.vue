@@ -14,29 +14,50 @@ const props = defineProps({
   descriptionStopAt: {
     type: Number,
     required: false,
-    default: () => 125
-  }
+    default: () => 125,
+  },
 })
 
 /**
  * Computes the burger description to be displayed
  */
 const computedBurgerDescription = computed(() => {
-  const itemDescription: string|undefined = props.item.description
+  const itemDescription: string | undefined = props.item.description
 
-  if( !itemDescription ) {
+  if (!itemDescription) {
     return ''
   }
 
   //slice the description not to be too long
   const slicedDescription: string = itemDescription.slice(0, props.descriptionStopAt)
 
-  if( slicedDescription !== itemDescription ) {
+  if (slicedDescription !== itemDescription) {
     isDescriptionOverFlow.value = true
     return `${slicedDescription}...`
   }
 
-  return itemDescription;
+  return itemDescription
+})
+
+const computedAlcoolIcon = computed(() => {
+  return (props.item as Drink).isAlcoholic ? 'mdi:alcohol' : 'material-symbols:no-drinks'
+})
+
+const computedAlcoolText = computed(() => {
+  return (props.item as Drink).isAlcoholic ? 'Alcoolisée' : 'Non Alcolisée'
+})
+
+const computedItemTotal = computed(() => {
+  const currentItem: Consumable = props.item
+
+  if( currentItem.price && currentItem.quantity ) {
+    const rawPrice = currentItem.price * currentItem.quantity
+
+    //arrondir à deux décimales
+    return `${Math.floor( rawPrice * 100 ) / 100} €`
+  } else {
+    return ''
+  }
 })
 
 /** If the burger description overflows */
@@ -70,11 +91,12 @@ const originalItemQuantity: number = props.item.quantity ?? 0
             />
           </template>
         </v-tooltip>
+
         {{ computedBurgerDescription }}
       </p>
     </v-card-text>
 
-    <v-divider class="mx-4 mb-1"></v-divider>
+    <v-divider class="mb-1"></v-divider>
 
     <div
       v-if="type === ConsumableType.Burger"
@@ -88,11 +110,34 @@ const originalItemQuantity: number = props.item.quantity ?? 0
       >
         {{ ingredient }}
       </v-chip>
+
+      <!-- Affichage de sa taille -->
+      <template v-if="(item as Burger).size">
+        <v-divider class="mb-1"></v-divider>
+
+        <p>
+          Taille: <v-chip>Medium</v-chip>
+        </p>
+      </template>
     </div>
 
-    <div v-else-if="type === ConsumableType.Drink">
+    <v-card-text v-else-if="type === ConsumableType.Drink">
+      <Icon :icon="computedAlcoolIcon" />
+      <p>{{ computedAlcoolText }}</p>
+    </v-card-text>
 
-    </div>
+    <v-divider class="mb-1"></v-divider>
+
+    <!-- Partie opération -->
+    <v-card-text class="mx-6">
+      <v-row>
+        {{ props.item.price }} €
+        <Icon icon="mdi:multiply" />
+        {{ props.item.quantity }}
+        <Icon icon="mdi:equal" />
+        {{ computedItemTotal }}
+      </v-row>
+    </v-card-text>
 
     <v-card-actions>
       <v-btn block border>
