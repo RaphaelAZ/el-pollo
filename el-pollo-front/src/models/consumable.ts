@@ -17,3 +17,8 @@ export interface Consumable {
     quantity?: number;
     category?: string;
 }
+
+export const enum ConsumableType {
+    Burger = 'burger',
+    Drink = 'drink'
+}
