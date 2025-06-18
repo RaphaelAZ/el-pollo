@@ -1,60 +1,66 @@
 <template>
-  <v-card>
-    <v-layout>
-      <v-navigation-drawer
-        expand-on-hover
-        rail
-        @mouseenter="isExpanded = true"
-        @mouseleave="isExpanded = false"
-      >
-        <v-list class="d-flex align-center">
-          <v-list-item class="drawer-head">
+  <aside>
+    <v-navigation-drawer
+      expand-on-hover
+      rail
+      @mouseenter="isExpanded = true"
+      @mouseleave="isExpanded = false"
+    >
+      <v-list>
+        <v-list-item class="d-flex align-center ga-3" to="/home" rounded="lg">
+          <template #prepend>
             <Icon
               icon="emojione-v1:chicken"
               :width="isExpanded ? 36 : 24"
               :height="isExpanded ? 36 : 24"
-              class="transition-all duration-300"
+              class="transition-all duration-300 mr-3"
             />
-            <v-list-item-title v-if="isExpanded" class="ml-2">El Pollo</v-list-item-title>
-          </v-list-item>
-        </v-list>
+          </template>
+          <v-list-item-title v-if="isExpanded" class="ml-2">El Pollo</v-list-item-title>
+        </v-list-item>
+      </v-list>
 
-        <v-divider></v-divider>
+      <v-divider></v-divider>
 
-        <v-list density="compact" nav>
-          <v-list-item>
+      <v-list density="compact" nav>
+        <v-list-item to="/home" rounded="lg">
+          <template #prepend>
             <Icon
               icon="emojione:hamburger"
               :width="isExpanded ? 36 : 24"
               :height="isExpanded ? 36 : 24"
-              class="transition-all duration-300"
+              class="transition-all duration-300 mr-3"
             />
-            <v-list-item-title v-if="isExpanded">Menus</v-list-item-title>
-          </v-list-item>
-          <v-list-item>
+          </template>
+          <v-list-item-title v-if="isExpanded">Menus</v-list-item-title>
+        </v-list-item>
+        <v-list-item to="/home" rounded="lg">
+          <template #prepend>
             <Icon
               icon="emojione:french-fries"
               :width="isExpanded ? 36 : 24"
               :height="isExpanded ? 36 : 24"
-              class="transition-all duration-300"
+              class="transition-all duration-300 mr-3"
             />
-            <v-list-item-title v-if="isExpanded">Seul</v-list-item-title>
-          </v-list-item>
-          <v-list-item>
+          </template>
+          <v-list-item-title v-if="isExpanded">Seul</v-list-item-title>
+        </v-list-item>
+        <v-list-item to="/home" rounded="lg">
+          <template #prepend>
             <Icon
               icon="emojione:tropical-drink"
               :width="isExpanded ? 36 : 24"
               :height="isExpanded ? 36 : 24"
-              class="transition-all duration-300"
+              class="transition-all duration-300 mr-3"
             />
-            <v-list-item-title v-if="isExpanded">Boissons</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+          </template>
+          <v-list-item-title v-if="isExpanded">Boissons</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-      <v-main style="height: 250px"></v-main>
-    </v-layout>
-  </v-card>
+    <v-main style="height: 250px"></v-main>
+  </aside>
 </template>
 
 <script lang="ts" setup>
@@ -74,3 +80,10 @@ onMounted(() => {
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.v-list-item,
+.v-list-item:hover {
+  background-color: transparent !important;
+}
+</style>
