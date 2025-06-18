@@ -46,34 +46,46 @@ const originalItemQuantity: number = props.item.quantity ?? 0
 </script>
 
 <template>
-  <v-card>
+  <v-card class="bg-info rounded-md d-flex flex-column">
     <v-img v-if="item.image" height="200" :src="item.image" cover />
 
     <v-card-title>
       {{ item.name }}
     </v-card-title>
 
-    <v-card-text>
-      <v-tooltip
-        :text="item.description"
-        v-if="isDescriptionOverFlow"
-      >
-        <template v-slot:activator="{ props: activatorProps }">
-          <Icon
-            icon="mdi:info"
-          />
-        </template>
-      </v-tooltip>
-
-      <p>{{ computedBurgerDescription }}</p>
+    <v-card-text class="d-flex flex-row align-end">
+      <p>
+        <v-tooltip
+          :text="item.description"
+          v-if="isDescriptionOverFlow"
+          location="bottom"
+          class="custom-tooltip"
+          max-width="200"
+        >
+          <template v-slot:activator="{ props: activatorProps }">
+            <Icon
+              icon="mdi:info"
+              v-bind="activatorProps"
+              width="20"
+              color="success"
+            />
+          </template>
+        </v-tooltip>
+        {{ computedBurgerDescription }}
+      </p>
     </v-card-text>
 
     <v-divider class="mx-4 mb-1"></v-divider>
 
-    <div v-if="type === ConsumableType.Burger">
+    <div
+      v-if="type === ConsumableType.Burger"
+      class="d-flex flex-wrap gap-2 chips-container ma-2"
+    >
       <v-chip
         v-for="(ingredient, key) in (item as Burger).ingredients"
         :key="key"
+        density="compact"
+        class="mb-1"
       >
         {{ ingredient }}
       </v-chip>
@@ -92,4 +104,10 @@ const originalItemQuantity: number = props.item.quantity ?? 0
   </v-card>
 </template>
 
-<style scoped></style>
+<style scoped>
+.chips-container {
+  max-height: 3.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

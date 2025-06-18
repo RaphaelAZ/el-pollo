@@ -5,11 +5,11 @@ import UserModal from '@/components/UserModal.vue'
 import { useUserStore } from '@/stores/userStore';
 
 const userStore = useUserStore();
-const showModal = computed(() => !userStore.activeUser);
+const showModal = computed(() => !true);
 </script>
 
 <template>
-  <v-app>
+  <v-app class="bg-secondary">
     <NavBar></NavBar>
 
     <v-main>
@@ -24,5 +24,5 @@ const showModal = computed(() => !userStore.activeUser);
   </v-app>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>

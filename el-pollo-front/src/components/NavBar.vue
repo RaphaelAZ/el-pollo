@@ -5,6 +5,7 @@
       rail
       @mouseenter="isExpanded = true"
       @mouseleave="isExpanded = false"
+      class="bg-info"
     >
       <v-list>
         <v-list-item class="d-flex align-center ga-3" to="/home" rounded="lg">
@@ -70,8 +71,6 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-
-    <v-main style="height: 250px"></v-main>
   </aside>
 </template>
 

@@ -28,7 +28,7 @@ const computedSubTitleText = computed(() => {
 <template>
   <h1>Résumé de la commande</h1>
 
-  <p> {{ computedSubTitleText }} </p>
+  <p class="mb-5"> {{ computedSubTitleText }} </p>
 </template>
 
 <style scoped>
