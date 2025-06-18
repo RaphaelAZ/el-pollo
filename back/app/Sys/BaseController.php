@@ -19,7 +19,7 @@ class BaseController
 
     protected function setGenericHeaders(?int $responseCode = 200): void
     {
-        header('Access-Control-Allow-Origin: 127.0.0.1:5173');
+        header('Access-Control-Allow-Origin: *');
         header('Cache-Control: no-cache, no-store, must-revalidate');
         header('Expires: 0');
         header('Pragma: no-cache');
