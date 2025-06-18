@@ -24,7 +24,7 @@
       <v-divider></v-divider>
 
       <v-list density="compact" nav>
-        <v-list-item to="/home" rounded="lg">
+        <v-list-item to="/burgers" rounded="lg">
           <template #prepend>
             <Icon
               icon="emojione:hamburger"
@@ -33,9 +33,9 @@
               class="transition-all duration-300 mr-3"
             />
           </template>
-          <v-list-item-title v-if="isExpanded">Menus</v-list-item-title>
+          <v-list-item-title v-if="isExpanded">Burgers</v-list-item-title>
         </v-list-item>
-        <v-list-item to="/home" rounded="lg">
+        <v-list-item to="/alone" rounded="lg">
           <template #prepend>
             <Icon
               icon="emojione:french-fries"
@@ -46,7 +46,7 @@
           </template>
           <v-list-item-title v-if="isExpanded">Seul</v-list-item-title>
         </v-list-item>
-        <v-list-item to="/home" rounded="lg">
+        <v-list-item to="/drinks" rounded="lg">
           <template #prepend>
             <Icon
               icon="emojione:tropical-drink"

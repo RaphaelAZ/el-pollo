@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import NavBar from '@/components/NavBar.vue';
 import UserModal from '@/components/UserModal.vue'
 import { useUserStore } from '@/stores/userStore';
+import { useConsumableStore } from '@/stores/consumableStore';
 
 const userStore = useUserStore();
+const consumableStore = useConsumableStore();
 const showModal = computed(() => !true);
+
+onMounted(() => {
+  consumableStore.getAllConsumable();
+})
+
 </script>
 
 <template>

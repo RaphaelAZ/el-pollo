@@ -59,7 +59,6 @@ const originalItemQuantity: number = props.item.quantity ?? 0
           :text="item.description"
           v-if="isDescriptionOverFlow"
           location="bottom"
-          class="custom-tooltip"
           max-width="200"
         >
           <template v-slot:activator="{ props: activatorProps }">
