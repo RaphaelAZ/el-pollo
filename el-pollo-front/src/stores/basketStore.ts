@@ -37,7 +37,7 @@ export const useBasketStore = defineStore('basket', {
       }
 
       const rawValue = this.basket.reduce(
-        (accumulator, current) => accumulator + (current.quantity * current.price),
+        (accumulator, current) => accumulator + (current.quantity! * current.price),
         0
       )
 

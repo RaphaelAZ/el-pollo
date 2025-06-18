@@ -2,6 +2,9 @@
 import { type PropType, ref } from 'vue'
 import { type Burger } from '@/models/consumable'
 import DetailsDialog from '@/components/lists/DetailsDialog.vue'
+import { useBasketStore } from '@/stores/basketStore'
+import { useSnackbarStore } from '@/stores/snackBarStore'
+import { SnackBarStatus } from '@/models/snackBarParams'
 
 const props = defineProps({
   item: {
@@ -10,9 +13,22 @@ const props = defineProps({
   }
 })
 
+const basketStore = useBasketStore();
+const snackBarStore = useSnackbarStore();
 const showDialog = ref(false);
+const showAlert = ref(false);
+
 const closeDialog = () => {
   showDialog.value = false;
+}
+
+const addItemToStore = () => {
+  basketStore.addItem(props.item.id);
+  snackBarStore.showSnackbar({
+    message: 'Vous avez ajouté 1 ' + props.item.name + ' au panier !',
+    status: SnackBarStatus.SUCCESS,
+    timer: 5000
+  });
 }
 </script>
 
@@ -43,12 +59,22 @@ const closeDialog = () => {
           </v-btn>
         </template>
       </v-tooltip>
-        <v-btn class="flex-grow-1" border>
-          <Icon icon="material-symbols:add" />
-          Ajouter
-        </v-btn>
+      <v-btn class="flex-grow-1" border @click="addItemToStore">
+        <Icon icon="material-symbols:add" />
+        Ajouter
+      </v-btn>
     </v-card-actions>
   </v-card>
+
+  <v-alert
+    v-if="showAlert"
+    type="success"
+    class="fixed bottom-4 left-1/2 transform -translate-x-1/2"
+    color="success"
+    icon="$success"
+    :text="'Vous avez ajouté 1' + item.name + 'au panier'"
+    style="width: 300px; z-index: 9999;"
+  ></v-alert>
 
   <DetailsDialog v-model="showDialog" @close="closeDialog" :item="item"></DetailsDialog>
 </template>
