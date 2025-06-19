@@ -54,25 +54,27 @@ const computedAvailableText = computed(() => {
       </v-chip>
     </v-card-title>
 
-    <v-card-text v-if="drink.description">
-      {{ drink.description }}
+    <v-container>
+      <v-card-text v-if="drink.description">
+        <p>{{ drink.description }}</p>
 
-      <v-divider></v-divider>
-    </v-card-text>
+        <v-divider class="mt-5"></v-divider>
+      </v-card-text>
 
-    <v-card-text class="d-flex items-center">
-      <Icon :icon="computedAlcoolIcon" />
-      <p>{{ computedAlcoolText }}</p>
-    </v-card-text>
+      <v-card-text class="d-flex items-center">
+        <Icon :icon="computedAlcoolIcon" />
+        <p>{{ computedAlcoolText }}</p>
+      </v-card-text>
 
-    <v-card-actions>
-      <v-btn
-        @click="closeDialog"
-      >
-        <Icon icon="mdi:close" />
-        Fermer
-      </v-btn>
-    </v-card-actions>
+      <v-card-actions>
+        <v-btn
+          @click="closeDialog"
+        >
+          <Icon icon="mdi:close" />
+          Fermer
+        </v-btn>
+      </v-card-actions>
+    </v-container>
   </v-card>
 </template>
 

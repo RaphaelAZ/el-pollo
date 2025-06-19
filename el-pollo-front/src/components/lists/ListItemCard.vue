@@ -23,7 +23,7 @@ const closeDialog = () => {
 }
 
 const addItemToStore = () => {
-  basketStore.addItem(props.item.id);
+  basketStore.addItem(props.item);
   snackBarStore.showSnackbar({
     message: 'Vous avez ajouté 1 ' + props.item.name + ' au panier !',
     status: SnackBarStatus.SUCCESS,

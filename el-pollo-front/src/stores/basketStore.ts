@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import type { Burger, Drink } from '@/models/consumable'
+import type { BasketConsumable, Burger, Consumable, Drink } from '@/models/consumable'
 
 interface BasketState {
-    basket: Array<Burger | Drink> | null
+    basket: Array<Burger | Drink>
 }
 
 export const useBasketStore = defineStore('basket', {
@@ -25,7 +25,7 @@ export const useBasketStore = defineStore('basket', {
     },
 
     resetBasket(): void {
-        this.basket = null;
+        this.basket = [];
     },
 
     /**
@@ -37,15 +37,56 @@ export const useBasketStore = defineStore('basket', {
       }
 
       const rawValue = this.basket.reduce(
-        (accumulator, current) => accumulator + (current.quantity! * current.price),
+        (accumulator, current) => accumulator + current.price,
         0
       )
+
+      console.log(rawValue)
 
       if( round ) {
         return Math.floor( rawValue * 100 ) / 100
       }
 
       return rawValue
+    },
+
+    /**
+     * Returns a summary of the current basket.
+     */
+    getBasketSummary(): BasketConsumable[] {
+
+      //console.log(this.basket)
+
+      //value is the number of this item in the basket
+      const basketItemsGroup: Map<Consumable, number> = new Map()
+
+      this.basket?.forEach(( current: Drink|Burger ) => {
+
+        let newQuantity = 1;
+
+        if( basketItemsGroup.has(current) ) {
+          newQuantity = basketItemsGroup.get(current) as number + 1
+          //console.log("a cet item", current, basketItemsGroup.get(current))
+        }
+
+        basketItemsGroup.set(current as Consumable, newQuantity)
+      })
+
+      //and calculate the total from the map
+      const basketItemsWithTotal: BasketConsumable[] = []
+
+      basketItemsGroup.forEach((nbrOfItems: number, consumable: Consumable) => {
+
+        const singleBasketTotalItem = {
+          ...consumable,
+          quantity: nbrOfItems,
+          total: consumable.price * nbrOfItems
+        } as BasketConsumable
+
+        basketItemsWithTotal.push(singleBasketTotalItem)
+      })
+
+      return basketItemsWithTotal
     }
   },
   getters: {

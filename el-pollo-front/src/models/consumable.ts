@@ -18,6 +18,10 @@ export interface Consumable {
     category?: string;
 }
 
+export interface BasketConsumable extends Consumable {
+  total: number;
+}
+
 export const enum ConsumableType {
     Burger = 'burger',
     Drink = 'drink'

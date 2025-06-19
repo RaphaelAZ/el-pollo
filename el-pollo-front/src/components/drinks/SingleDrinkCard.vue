@@ -2,6 +2,9 @@
 import { computed, type PropType, ref } from 'vue'
 import type { Drink } from '@/models/consumable.ts'
 import SingleDrinkDetails from '@/components/drinks/SingleDrinkDetails.vue'
+import { useBasketStore } from '@/stores/basketStore.ts'
+import { useSnackbarStore } from '@/stores/snackBarStore.ts'
+import { SnackBarStatus } from '@/models/snackBarParams.ts'
 
 const props = defineProps({
   drink: {
@@ -9,6 +12,9 @@ const props = defineProps({
     required: true
   }
 })
+
+const basketStore = useBasketStore();
+const snackBarStore = useSnackbarStore();
 
 const computedAlcoolIcon = computed(() => {
   return props.drink.isAlcoholic ? 'mdi:alcohol' : 'material-symbols:no-drinks'
@@ -23,6 +29,16 @@ const showDialog = ref(false);
 const closeDialog = () => {
   showDialog.value = false;
 }
+
+const addDrinkToCart = (): void => {
+  basketStore.addItem(props.drink)
+
+  snackBarStore.showSnackbar({
+    message: `Vous avez ajouté 1 ${props.drink.name} au pannier !`,
+    status: SnackBarStatus.SUCCESS,
+    timer: 5000
+  });
+}
 </script>
 
 <template>
@@ -30,12 +46,6 @@ const closeDialog = () => {
     <v-img v-if="drink.image" height="200" :src="drink.image" cover />
 
     <v-card-title>{{ drink.name }}</v-card-title>
-
-    <template v-if="drink.description">
-      <v-card-text> {{ drink.description }} </v-card-text>
-
-      <v-divider></v-divider>
-    </template>
 
     <!-- Texte si alcoolisé ou non -->
     <v-card-text class="d-flex items-center">
@@ -60,7 +70,7 @@ const closeDialog = () => {
           </v-btn>
         </template>
       </v-tooltip>
-      <v-btn class="flex-grow-1" border>
+      <v-btn class="flex-grow-1" border @click="addDrinkToCart">
         <Icon icon="material-symbols:add" />
         Ajouter
       </v-btn>

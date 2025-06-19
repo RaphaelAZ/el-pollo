@@ -59,7 +59,7 @@
           <v-list-item-title v-if="isExpanded">Boissons</v-list-item-title>
         </v-list-item>
 
-        <v-list-item to="/order" rounded="lg">
+        <v-list-item to="/order" rounded="lg" v-if="basketStore.basket.length > 0">
           <template #prepend>
             <Icon
               icon="emojione:shopping-cart"
@@ -70,6 +70,7 @@
           </template>
           <v-list-item-title v-if="isExpanded">Commande</v-list-item-title>
         </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
   </aside>
@@ -77,8 +78,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { useBasketStore } from '@/stores/basketStore.ts'
 
 const isExpanded = ref(false);
+
+const basketStore = useBasketStore()
 </script>
 
 <style lang="scss" scoped>
