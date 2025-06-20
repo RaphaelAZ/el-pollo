@@ -10,10 +10,12 @@ class ConsumablesController extends BaseController
     {
         $burgerData = $this->getJsonData('burgers.json');
         $drinkData = $this->getJsonData('drinks.json');
+        $ingredients = $this->getJsonData('ingredients.json');
         
         $this->respondJson([
             'burgers' => $burgerData,
-            'drinks' => $drinkData
+            'drinks' => $drinkData,
+            'ingredients' => $ingredients
         ]);
     }
 }

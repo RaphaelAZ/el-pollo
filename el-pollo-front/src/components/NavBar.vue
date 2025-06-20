@@ -36,7 +36,7 @@
           <v-list-item-title v-if="isExpanded">Burgers</v-list-item-title>
         </v-list-item>
 
-        <v-list-item to="/alone" rounded="lg">
+        <v-list-item to="/builder" rounded="lg">
           <template #prepend>
             <Icon
               icon="emojione:french-fries"

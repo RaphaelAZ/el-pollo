@@ -46,8 +46,8 @@ const authFormRef = ref<HTMLFormElement | null>(null);
 const username = ref<string>();
 
 const confirmUsername = () => {
-    if(authFormRef.value.validate()) {
-        authStore.fetchUser(username.value);
+    if(authFormRef.value!.validate()) {
+        authStore.fetchUser(username.value!);
     }
 }
 </script>

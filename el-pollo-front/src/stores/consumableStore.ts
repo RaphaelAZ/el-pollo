@@ -5,7 +5,7 @@ import type { Burger, Consumable, Drink } from '@/models/consumable'
 export interface ConsumableState {
     burgers: Burger[] | null;
     drinks: Drink[] | null;
-    others: Consumable[] | null;
+    ingredients: string[] | null;
 }
 
 export const useConsumableStore = defineStore('consumables', {
@@ -13,7 +13,7 @@ export const useConsumableStore = defineStore('consumables', {
     return {
       burgers: null,
       drinks: null,
-      others: null
+      ingredients: null
     }
   },
   actions: {
@@ -23,6 +23,7 @@ export const useConsumableStore = defineStore('consumables', {
           const data = response.data as ConsumableState;
           this.burgers = data.burgers;
           this.drinks = data.drinks;
+          this.ingredients = data.ingredients;
           return true;
         }
         catch(error) {
@@ -34,6 +35,6 @@ export const useConsumableStore = defineStore('consumables', {
   getters: {
     allBurgers: (state) => state.burgers,
     allDrinks: (state) => state.drinks,
-    allOthers: (state) => state.others
+    allIngredients: (state) => state.ingredients
   },
 })
