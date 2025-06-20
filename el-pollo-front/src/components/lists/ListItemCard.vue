@@ -38,7 +38,10 @@ const addItemToStore = () => {
       timer: 5000
     });
   } else {
-    router.push('/login');
+    snackBarStore.showSnackbar({
+        message: 'Vous devez être connecté pour commander',
+        status: SnackBarStatus.ERROR
+    })
   }
   
 }

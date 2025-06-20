@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { Burger, Ingredients } from '@/models/consumable';
 import { SnackBarStatus } from '@/models/snackBarParams';
+import router from '@/router';
 import { useBasketStore } from '@/stores/basketStore';
 import { useConsumableStore } from '@/stores/consumableStore';
 import { useSnackbarStore } from '@/stores/snackBarStore';
+import { useUserStore } from '@/stores/userStore';
 import { computed, ref, watch } from 'vue';
 
 const consuStore = useConsumableStore();
+const userStore = useUserStore();
 const basketStore = useBasketStore();
 const snackBarStore = useSnackbarStore();
 const buildedBurger = ref<Burger>({
@@ -38,11 +41,18 @@ const burgerPrix = computed(() => {
 const formInvalid = computed(() => buildedBurger.value.ingredients?.length === 0 || !buildedBurger.value.name);
 
 const addBurgerToCart = () => {
-    basketStore.addItem(buildedBurger.value);
-    snackBarStore.showSnackbar({
-        message: 'Le burger' + buildedBurger.value.name + 'a bien été ajouté au panier !',
-        status: SnackBarStatus.SUCCESS
-    })
+    if(userStore.isLoggedIn) {
+        basketStore.addItem(buildedBurger.value);
+        snackBarStore.showSnackbar({
+            message: 'Le burger' + buildedBurger.value.name + 'a bien été ajouté au panier !',
+            status: SnackBarStatus.SUCCESS
+        })
+    } else {
+        snackBarStore.showSnackbar({
+            message: 'Vous devez être connecté pour commander',
+            status: SnackBarStatus.ERROR
+        })
+    }
 }
 </script>
 
