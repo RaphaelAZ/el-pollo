@@ -7,6 +7,7 @@ import BurgersView from '@/views/BurgersView.vue'
 import CheckoutView from '@/views/CheckoutView.vue'
 import OrderConfirmView from '@/views/OrderConfirmView.vue'
 import BuilderView from '@/views/BuilderView.vue'
+import OrderHistoryView from '@/views/OrderHistoryView.vue'
 
 const publicRoutes = [
     {
@@ -28,6 +29,11 @@ const publicRoutes = [
       path: '/builder',
       name: 'builder',
       component: BuilderView
+    },
+    {
+      path: '/order/history',
+      name: 'previous-orders',
+      component: OrderHistoryView
     }
 ];
 

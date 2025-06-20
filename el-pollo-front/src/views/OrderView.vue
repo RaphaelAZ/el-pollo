@@ -3,6 +3,7 @@ import OrderBanner from '@/components/order/OrderBanner.vue'
 import type { Burger, Drink } from '@/models/consumable.ts'
 import { ref, watch } from 'vue'
 import { useBasketStore } from '@/stores/basketStore.ts'
+import { getTotalForItem } from '@/utils/consumable-utils.ts'
 
 const basketStore = useBasketStore()
 
@@ -32,23 +33,9 @@ watch(
   basketStore.basket,
   (newBasket, oldBasket): void => {
     itemsRef.value = basketStore.activeBasket
-    console.log("kqznjnklqzdnklzdnklqznklqzdndklznkl")
     totalOrderRef.value = basketStore.getTotal() as number
   }
 )
-
-const getTotalForItem = (item: Burger|Drink) => {
-  const itemTotalRaw = (item.quantity as number) * item.price
-
-  //arrondir à deux chiffres
-  const itemTotal = Math.floor( itemTotalRaw * 100 ) / 100
-
-  if( itemTotal ) {
-    return `${itemTotal} €`
-  } else {
-    return '(Erreur)'
-  }
-}
 
 </script>
 
