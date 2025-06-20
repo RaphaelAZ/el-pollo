@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full my-5 p-5 bg-secondary-200">
-    <h1 class="text-center my-5 d-flex align-center ga-2 justify-center text-h3">
+  <div class="w-full my-10 pa-7 rounded-xl" id="main-banner">
+    <h1 class="text-center my-5 mb-8 d-flex align-center ga-2 justify-center text-h3">
       <Icon icon="emojione-v1:chicken" />
       El Pollo
     </h1>
@@ -15,6 +15,11 @@
       <Icon class="text-h5" width="35" height="35" icon="emojione:smiling-face-with-heart-eyes" />
     </div>
   </div>
+
+  <h3 class="text-center text-h4 w-full mb-2">
+    <Icon width="50" height="50" />
+    Nous proposons:
+  </h3>
 
   <v-container style="z-index: 1">
     <v-row>
@@ -111,5 +116,9 @@ const allDrinksPhotos = [
 
 #bot-right-icon {
   transform: rotate(12deg);
+}
+
+#main-banner {
+  background-color: rgba(var(--v-theme-info), 0.35);
 }
 </style>
