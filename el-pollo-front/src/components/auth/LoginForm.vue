@@ -5,21 +5,29 @@
         label="E-mail"
         v-model="email"
         :rules="emailRules"
-        prepend-icon="mdi-account"
         ref="usernameAnchor"
         id="email-login-input"
-      />
+      >
+        <template #prepend>
+          <Icon icon="mdi:account" width="24"></Icon>
+        </template>
+      </v-text-field>
 
       <v-text-field
         label="Mot de passe"
         v-model="password"
         :rules="passwordRules"
-        prepend-icon="mdi-key"
-        :append-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-closed'"
         id="password-login-input"
-      />
+        type="password"
+      >
+        <template #prepend>
+          <Icon icon="mdi:key" width="24"></Icon>
+        </template>
+      </v-text-field>
 
-      <v-btn type="submit" id="submit-login-button" :disabled="!isFormValid"> Se connecter </v-btn>
+      <v-btn type="submit" id="submit-login-button" :disabled="!isFormValid" class="mt-5">
+        Se connecter
+      </v-btn>
     </v-form>
   </v-container>
 </template>
@@ -39,7 +47,6 @@ const userStore = useUserStore();
 const email = ref('');
 const password = ref('');
 const isFormValid = ref(false);
-const isPasswordShown = ref(false);
 
 const handleLogin = async () => {
   if (isFormValid.value) {

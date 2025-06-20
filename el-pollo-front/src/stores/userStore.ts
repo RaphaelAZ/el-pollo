@@ -6,19 +6,19 @@ export const useUserStore = defineStore('user', {
   state: (): User => {
     return {
       username: null,
-      email: null
+      email: null,
+      jwt: null,
     }
   },
   actions: {
     fetchUser(user: User): void {
       this.username = user.username;
       this.email = user.email;
-      console.log(user);
     },
 
     async loginAttempt(user: LoginData): Promise<boolean> {
       try {
-        // const response = await getHttpClient().post('api/login');
+        const response = await getHttpClient().post('api/login');
         this.fetchUser({
           username: "TOTO",
           email: user.email
@@ -32,11 +32,13 @@ export const useUserStore = defineStore('user', {
 
     async registerAttempt(user: RegisterData): Promise<boolean> {
       try {
-        // const response = await getHttpClient().post('api/register');
-        this.fetchUser({
-          username: "TOTO",
-          email: user.email
-        });
+        const response = await getHttpClient().post('api/register');
+        if(response) {
+          this.loginAttempt({
+            email: user.email,
+            password: user.password
+          })
+        }
         return true;
       } catch(e) {
         console.error(e);
@@ -47,6 +49,7 @@ export const useUserStore = defineStore('user', {
     forceDisconnect(): void {
       this.username = null;
       this.email = null;
+      this.jwt = null;
     }
   },
   getters: {

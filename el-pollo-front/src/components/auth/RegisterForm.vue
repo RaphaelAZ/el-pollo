@@ -5,40 +5,29 @@
       v-model="valid"
       @submit.prevent="handleRegister"
       >
-        <v-text-field
-          label="Nom d'utilisateur"
-          v-model="username"
-          :rules="usernameRules"
-          prepend-icon="mdi-account"
-          ref="usernameAnchor"
-          id="username-register-input"
-        />
+        <v-text-field label="Nom d'utilisateur" v-model="username" :rules="usernameRules" >
+          <template #prepend>
+            <Icon icon="mdi:account" width="24"></Icon>
+          </template>
+        </v-text-field>
 
-        <v-text-field
-          label="E-mail"
-          v-model="email"
-          :rules="emailRules"
-          prepend-icon="mdi-email-outline"
-          ref="emailAnchor"
-          id="email-register-input"
-        />
+        <v-text-field label="E-mail" v-model="email" :rules="emailRules" >
+          <template #prepend>
+            <Icon icon="mdi:email" width="24"></Icon>
+          </template>
+        </v-text-field>
 
-        <v-text-field
-          label="Mot de passe"
-          v-model="password"
-          :rules="passwordRules"
-          prepend-icon="mdi-key"
-          id="password-register-input"
-        />
+        <v-text-field label="Mot de passe" v-model="password" :rules="passwordRules" type="password" >
+          <template #prepend>
+            <Icon icon="mdi:key" width="24"></Icon>
+          </template>
+        </v-text-field>
 
-        <v-text-field
-          label="Confirmer le mot de passe"
-          v-model="confirmPassword"
-          :rules="confirmRules"
-          prepend-icon="mdi-key"
-          ref="confirmPasswordFieldRef"
-          id="confirm-password-register-input"
-        />
+        <v-text-field label="Confirmer le mot de passe" v-model="confirmPassword" :rules="confirmRules" type="password" ref="confirmPasswordFieldRef">
+          <template #prepend>
+            <Icon icon="mdi:key" width="24"></Icon>
+          </template>
+        </v-text-field>
 
         <v-row class="flex align-end text-center">
           <v-col cols="5">

@@ -5,6 +5,8 @@ import DetailsDialog from '@/components/lists/DetailsDialog.vue'
 import { useBasketStore } from '@/stores/basketStore'
 import { useSnackbarStore } from '@/stores/snackBarStore'
 import { SnackBarStatus } from '@/models/snackBarParams'
+import { useUserStore } from '@/stores/userStore'
+import router from '@/router'
 
 const props = defineProps({
   item: {
@@ -19,6 +21,7 @@ const props = defineProps({
 
 const basketStore = useBasketStore();
 const snackBarStore = useSnackbarStore();
+const userStore = useUserStore();
 const showDialog = ref(false);
 const showAlert = ref(false);
 
@@ -27,12 +30,17 @@ const closeDialog = () => {
 }
 
 const addItemToStore = () => {
-  basketStore.addItem(props.item);
-  snackBarStore.showSnackbar({
-    message: 'Vous avez ajouté 1 ' + props.item.name + ' au panier !',
-    status: SnackBarStatus.SUCCESS,
-    timer: 5000
-  });
+  if(userStore.isLoggedIn) {
+    basketStore.addItem(props.item);
+    snackBarStore.showSnackbar({
+      message: 'Vous avez ajouté 1 ' + props.item.name + ' au panier !',
+      status: SnackBarStatus.SUCCESS,
+      timer: 5000
+    });
+  } else {
+    router.push('/login');
+  }
+  
 }
 </script>
 

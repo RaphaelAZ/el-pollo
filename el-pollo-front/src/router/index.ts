@@ -10,8 +10,22 @@ import BuilderView from '@/views/BuilderView.vue'
 import OrderHistoryView from '@/views/OrderHistoryView.vue'
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
-import { components } from 'vuetify/dist/vuetify.js';
 import PolloView from '@/views/PolloView.vue';
+
+const onlyPublicRoutes = [
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+      beforeEnter: [NotAuthGuard],
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView,
+      beforeEnter: [NotAuthGuard],
+    },
+]
 
 const publicRoutes = [
     {
@@ -38,16 +52,6 @@ const publicRoutes = [
       path: '/order/history',
       name: 'previous-orders',
       component: OrderHistoryView
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: LoginView
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: RegisterView
     },
     {
       path: '/pollo',
@@ -85,6 +89,7 @@ const protectedRoute = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    ...onlyPublicRoutes,
     ...publicRoutes,
     ...protectedRoute
   ]
@@ -94,6 +99,16 @@ function AuthGuard(to: RouteLocationNormalized, from: RouteLocationNormalized, n
   const trueUserStore = useUserStore();
 
   if( trueUserStore.isLoggedIn ) {
+    next();
+  } else {
+    next('/home');
+  }
+}
+
+function NotAuthGuard(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+  const trueUserStore = useUserStore();
+
+  if( !trueUserStore.isLoggedIn ) {
     next();
   } else {
     next('/home');
