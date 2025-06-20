@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { Burger, Ingredients } from '@/models/consumable';
+import { SnackBarStatus } from '@/models/snackBarParams';
 import { useBasketStore } from '@/stores/basketStore';
 import { useConsumableStore } from '@/stores/consumableStore';
+import { useSnackbarStore } from '@/stores/snackBarStore';
 import { computed, ref, watch } from 'vue';
 
 const consuStore = useConsumableStore();
 const basketStore = useBasketStore();
+const snackBarStore = useSnackbarStore();
 const buildedBurger = ref<Burger>({
     id: -1,
     name: "",
@@ -33,6 +36,14 @@ const burgerPrix = computed(() => {
 })
 
 const formInvalid = computed(() => buildedBurger.value.ingredients?.length === 0 || !buildedBurger.value.name);
+
+const addBurgerToCart = () => {
+    basketStore.addItem(buildedBurger.value);
+    snackBarStore.showSnackbar({
+        message: 'Le burger' + buildedBurger.value.name + 'a bien été ajouté au panier !',
+        status: SnackBarStatus.SUCCESS
+    })
+}
 </script>
 
 <template>
@@ -41,7 +52,7 @@ const formInvalid = computed(() => buildedBurger.value.ingredients?.length === 0
         <v-card class="pa-4 bg-success" max-width="500" elevation="3">
             <v-card-title>🍔 Créer votre burger</v-card-title>
 
-            <v-form v-model="burgerForm" @submit.prevent="basketStore.addItem(buildedBurger)">
+            <v-form v-model="burgerForm" @submit.prevent="addBurgerToCart">
                 <v-text-field
                     v-model="buildedBurger.name"
                     label="Nom du burger"
@@ -114,9 +125,9 @@ const formInvalid = computed(() => buildedBurger.value.ingredients?.length === 0
         </v-card>
 
         <v-card class="pa-4 bg-success" max-width="500" min-width="400" min-height="0" elevation="3">
-            <section class="d-flex flex-row justify-space-between">
+            <section class="d-flex flex-row justify-space-between align-center">
                 <v-card-title>🍔 Résumé du burger</v-card-title>
-                <v-chip class="mb-1 mr-1" color="success" size="large">{{ burgerPrix.toString() }}€ </v-chip>
+                <v-chip class="mb-1 mr-1" color="primary" size="large">{{ burgerPrix.toString() }}€ </v-chip>
             </section>
             
 
