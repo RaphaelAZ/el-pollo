@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type PropType, ref } from 'vue'
-import { type Burger } from '@/models/consumable'
+import { ConsumableType, type Burger, type Drink } from '@/models/consumable'
 import DetailsDialog from '@/components/lists/DetailsDialog.vue'
 import { useBasketStore } from '@/stores/basketStore'
 import { useSnackbarStore } from '@/stores/snackBarStore'
@@ -8,8 +8,12 @@ import { SnackBarStatus } from '@/models/snackBarParams'
 
 const props = defineProps({
   item: {
-    type: Object as PropType<Burger>,
+    type: Object as PropType<Burger | Drink>,
     required: true,
+  },
+  type: {
+    type: String as PropType<ConsumableType>,
+    required: true
   }
 })
 
@@ -33,10 +37,10 @@ const addItemToStore = () => {
 </script>
 
 <template>
-  <v-card :class="'bg-info rounded-md d-flex flex-column' + (item.available === false ? 'bg-gray' : 'bg-info')">
+  <v-card class="bg-info rounded-md d-flex flex-column">
     <v-img v-if="item.image" height="200" :src="item.image" cover />
 
-    <v-card-title>
+    <v-card-title class="h-fit">
       {{ item.name }}
     </v-card-title>
 
@@ -59,9 +63,9 @@ const addItemToStore = () => {
           </v-btn>
         </template>
       </v-tooltip>
-      <v-btn class="flex-grow-1" border @click="addItemToStore">
-        <Icon icon="material-symbols:add" />
-        Ajouter
+      <v-btn class="flex-grow-1" border @click="addItemToStore" :disabled="item.available === false">
+        <Icon icon="material-symbols:add" v-if="item.available === true" />
+        {{ item.available === false ? 'En Rupture' : 'Ajouter' }}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -76,7 +80,7 @@ const addItemToStore = () => {
     style="width: 300px; z-index: 9999;"
   ></v-alert>
 
-  <DetailsDialog v-model="showDialog" @close="closeDialog" :item="item"></DetailsDialog>
+  <DetailsDialog v-model="showDialog" @close="closeDialog" :item="item" :type="type"></DetailsDialog>
 </template>
 
 <style scoped>

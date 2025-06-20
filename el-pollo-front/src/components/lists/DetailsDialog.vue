@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { type PropType, ref } from 'vue'
-import type { Burger } from '@/models/consumable.ts'
+import { type PropType } from 'vue'
+import { type Burger, ConsumableType, type Drink } from '@/models/consumable.ts'
 
 const props = defineProps({
   item: {
-    type: Object as PropType<Burger>,
+    type: Object as PropType<Burger | Drink>,
     required: true,
+  },
+  type: {
+    type: String as PropType<ConsumableType>,
+    required: true
   }
 })
-const burgerDetails = ref<Burger | null>();
 
 const emit = defineEmits(['close']);
 </script>
@@ -22,11 +25,14 @@ const emit = defineEmits(['close']);
                     <v-chip class="mb-1 mr-1" color="success" size="small">
                         {{ item.price }}€
                     </v-chip>
-                    <v-chip class="mb-1" color="success" size="small">
+                    <v-chip class="mb-1 mr-1" color="success" size="small">
                         {{ item.available === false ? 'Indisponible' : 'Disponible' }}
                     </v-chip>
-                    <v-chip class="mb-1" color="success" size="small" v-if="!!item.size">
-                        {{ item.size }}
+                    <v-chip class="mb-1 mr-1" color="success" size="small" v-if="type === ConsumableType.Burger && !!(item as Burger).size">
+                        {{ (item as Burger).size }}
+                    </v-chip>
+                    <v-chip class="mb-1" color="success" size="small" v-if="type === ConsumableType.Drink">
+                        {{ (item as Drink).isAlcoholic ? 'Avec Alcool' : 'Sans Alcool' }}
                     </v-chip>
                 </span>
                 <v-btn @click="emit('close')" color="success" class="rounded-circle" icon size="small">
@@ -45,20 +51,22 @@ const emit = defineEmits(['close']);
                 <section class="mt-2">
                     <p>{{ item.description }}</p>
 
-                    <v-divider class="mx-4 my-3"></v-divider>
+                    <section v-if="props.type === ConsumableType.Burger">
+                        <v-divider class="mx-4 my-3"></v-divider>
 
-                    <h3 class="mb-3">Ingrédients</h3>
-                    <div class="d-flex flex-row gap-5 flex-wrap">
-                        <v-chip
-                            v-for="(ingredient, key) in (item as Burger).ingredients"
-                            :key="key"
-                            density="compact"
-                            class="mb-1"
-                            color="success"
-                        >
-                            {{ ingredient }}
-                        </v-chip>
-                    </div>
+                        <h3 class="mb-3">Ingrédients</h3>
+                        <div class="d-flex flex-row gap-5 flex-wrap">
+                            <v-chip
+                                v-for="(ingredient, key) in (item as Burger).ingredients"
+                                :key="key"
+                                density="compact"
+                                class="mb-1"
+                                color="success"
+                            >
+                                {{ ingredient }}
+                            </v-chip>
+                        </div>
+                    </section>
                 </section>
             </v-container>
         </v-card>

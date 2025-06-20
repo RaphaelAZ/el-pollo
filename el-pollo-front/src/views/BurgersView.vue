@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Burger } from '@/models/consumable.ts'
+import { ConsumableType, type Burger } from '@/models/consumable.ts'
 import { ref, watch } from 'vue'
 import { useConsumableStore } from '@/stores/consumableStore';
 import ListItemCard from '@/components/lists/ListItemCard.vue'
@@ -25,6 +25,7 @@ watch(() => consumableStore.allBurgers,
         v-for="(item, key) in itemsRef"
         :item="item"
         :key="key"
+        :type="ConsumableType.Burger"
       />
     </div>
   </section>
