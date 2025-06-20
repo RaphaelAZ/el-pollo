@@ -10,7 +10,7 @@ import { useSnackbarStore } from "@/stores/snackBarStore";
 const userStore = useUserStore();
 const snackbar = useSnackbarStore();
 const consumableStore = useConsumableStore();
-const showModal = computed(() => !true);
+const showModal = computed(() => !userStore.activeUser);
 
 onMounted(() => {
   consumableStore.getAllConsumable();
