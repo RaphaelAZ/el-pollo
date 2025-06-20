@@ -59,10 +59,9 @@
 
         <navbar-item
           title=" "
-          class="mt-10"
+          class="mt-15"
           :is-parent-expanded="isExpanded"
           to="/pollo"
-          :condition="basketStore.basket.length > 0"
         />
 
       </v-list>

@@ -10,6 +10,8 @@ import BuilderView from '@/views/BuilderView.vue'
 import OrderHistoryView from '@/views/OrderHistoryView.vue'
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
+import { components } from 'vuetify/dist/vuetify.js';
+import PolloView from '@/views/PolloView.vue';
 
 const publicRoutes = [
     {
@@ -46,6 +48,11 @@ const publicRoutes = [
       path: '/register',
       name: 'register',
       component: RegisterView
+    },
+    {
+      path: '/pollo',
+      name: 'pollo',
+      component: PolloView
     }
 ];
 
