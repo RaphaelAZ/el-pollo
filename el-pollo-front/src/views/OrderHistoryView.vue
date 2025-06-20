@@ -1,86 +1,41 @@
 <script setup lang="ts">
-import OrderBanner from '@/components/order/OrderBanner.vue'
-import type { Burger, Drink } from '@/models/consumable.ts'
-import { ref } from 'vue'
-import { useBasketStore } from '@/stores/basketStore.ts'
+import { useOrdersHistoryStore } from '@/stores/ordersHistoryStore.ts'
+import SinglePaidOrder from '@/components/order/SinglePaidOrder.vue'
 
-const basketStore = useBasketStore()
-
-const itemsRef = ref< (Drink|Burger)[] >(basketStore.activeBasket)
-const totalOrderRef = ref<number>(basketStore.getTotal() as number)
-
-const tableHeaders = [
-  { title: 'Nom', sortable: true, key: 'name' },
-  { title: 'Quantité', sortable: true, key: 'quantity' },
-  { title: 'Total', sortable: true, key: 'total' },
-]
-
-const getTotalForItem = (item: Burger|Drink) => {
-  const itemTotalRaw = (item.quantity as number) * item.price
-
-  //arrondir à deux chiffres
-  const itemTotal = Math.floor( itemTotalRaw * 100 ) / 100
-
-  if( itemTotal ) {
-    return `${itemTotal} €`
-  } else {
-    return '(Erreur)'
-  }
-}
+const ordersHistoryStore = useOrdersHistoryStore()
 
 </script>
 
 <template>
-  <OrderBanner
-    :items="itemsRef"
-    :total="totalOrderRef"
-  />
+  <v-container v-if="ordersHistoryStore.previousOrders.length > 0">
+    <h1 class="text-center mb-5">Commandes précédentes</h1>
 
-  <v-data-table
-    class="mt-5"
-    id="order-summary-table"
-    :headers="tableHeaders"
-    :items="itemsRef"
-    v-if="itemsRef.length > 0"
-    :items-per-page="-1"
-    hide-default-footer
-  >
-    <template #item.name="{ item }">
-      <div class="d-flex align-center ga-2">
-        <v-avatar>
-          <v-img
-            :src="item.image"
-          />
-        </v-avatar>
+    <div id="previous-orders-grid">
 
-        <span>{{ item.name }}</span>
-      </div>
-    </template>
+      <article
+        v-for="(order, key) in ordersHistoryStore.previousOrders"
+        :key="key"
+        class="h-fit"
+      >
+        <SinglePaidOrder :order="order" />
+      </article>
 
-    <template #item.total="{ item }">
-      {{ getTotalForItem(item as Burger|Drink) }}
-    </template>
-  </v-data-table>
+    </div>
+  </v-container>
+
+  <v-container v-else>
+    <h1>Aucune commande précédente</h1>
+  </v-container>
 </template>
 
 <style lang="css">
-
-#order-summary-table {
-  background-color: rgb(var(--v-theme-info));
-
-  --borders-table: 2px solid rgb(var(--v-theme-primary));
+#previous-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
 }
 
-#order-summary-table * {
-  color: white;
-}
-
-#order-summary-table thead th {
-  font-weight: bold;
-}
-
-#order-summary-table thead th,
-#order-summary-table tbody tr:not(:last-child) td {
-  border-bottom: var(--borders-table) !important;
+.h-fit {
+  height: fit-content;
 }
 </style>

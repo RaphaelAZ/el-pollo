@@ -71,6 +71,18 @@
           <v-list-item-title v-if="isExpanded">Commande</v-list-item-title>
         </v-list-item>
 
+        <v-list-item to="/order/history" rounded="lg" v-if="previousOrderStore.previousOrders.length > 0">
+          <template #prepend>
+            <Icon
+              icon="emojione:hourglass-not-done"
+              :width="isExpanded ? 36 : 24"
+              :height="isExpanded ? 36 : 24"
+              class="transition-all duration-300 mr-3"
+            />
+          </template>
+          <v-list-item-title v-if="isExpanded">Précédentes commandes</v-list-item-title>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
   </aside>
@@ -79,10 +91,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useBasketStore } from '@/stores/basketStore.ts'
+import { useOrdersHistoryStore } from '@/stores/ordersHistoryStore.ts'
 
 const isExpanded = ref(false);
 
 const basketStore = useBasketStore()
+const previousOrderStore = useOrdersHistoryStore()
 </script>
 
 <style lang="scss" scoped>

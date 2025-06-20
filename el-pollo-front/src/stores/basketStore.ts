@@ -91,7 +91,7 @@ export const useBasketStore = defineStore('basket', {
 
         //80% chance to resolve
         setTimeout(() => {
-          if( Math.random() >= 0.8 ) {
+          if( Math.random() <= 0.8 ) {
             resolve(true)
           } else {
             reject(false)

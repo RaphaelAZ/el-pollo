@@ -13,5 +13,6 @@ export interface PaidOrder {
   items: (Burger|Drink)[],
   place: OrderPayValues,
 
+  uuid?: string,
   orderedAt: Date,
 }
