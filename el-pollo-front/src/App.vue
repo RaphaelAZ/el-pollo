@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import NavBar from '@/components/NavBar.vue';
+import { computed, onMounted } from 'vue'
+import NavBar from '@/components/navbar/NavBar.vue';
 import UserModal from '@/components/UserModal.vue'
 import SnackBar from '@/components/common/SnackBar.vue'
 import { useUserStore } from '@/stores/userStore';
@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-app class="bg-secondary">
+  <v-app class="bg-secondary relative">
     <NavBar></NavBar>
 
     <v-main>
