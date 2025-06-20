@@ -33,7 +33,7 @@ const addItemToStore = () => {
 </script>
 
 <template>
-  <v-card :class="'bg-info rounded-md d-flex flex-column' + item.available === false ? 'bg-gray' : 'bg-info'">
+  <v-card :class="'bg-info rounded-md d-flex flex-column' + (item.available === false ? 'bg-gray' : 'bg-info')">
     <v-img v-if="item.image" height="200" :src="item.image" cover />
 
     <v-card-title>

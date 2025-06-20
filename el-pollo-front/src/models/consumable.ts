@@ -26,3 +26,11 @@ export enum ConsumableType {
     Burger = 'burger',
     Drink = 'drink'
 }
+
+export interface Ingredients {
+    bread: string[],
+    meat: string[],
+    vegetables: string[],
+    cheese: string[],
+    sauce: string[]
+}

@@ -10,7 +10,6 @@ const itemsRef = ref<Burger[] | null>();
 watch(() => consumableStore.allBurgers,
   (values) => {
     itemsRef.value = values;
-    console.log(values);
   },
   { immediate: true }
 )

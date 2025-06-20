@@ -39,13 +39,13 @@
         <v-list-item to="/builder" rounded="lg">
           <template #prepend>
             <Icon
-              icon="emojione:french-fries"
+              icon="emojione:bacon"
               :width="isExpanded ? 36 : 24"
               :height="isExpanded ? 36 : 24"
               class="transition-all duration-300 mr-3"
             />
           </template>
-          <v-list-item-title v-if="isExpanded">Seul</v-list-item-title>
+          <v-list-item-title v-if="isExpanded">Mon Burger</v-list-item-title>
         </v-list-item>
         <v-list-item to="/drinks" rounded="lg">
           <template #prepend>

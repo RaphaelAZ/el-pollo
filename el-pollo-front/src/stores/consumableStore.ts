@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { getHttpClient } from '@/plugins/http-client'
-import type { Burger, Consumable, Drink } from '@/models/consumable'
+import type { Burger, Drink, Ingredients } from '@/models/consumable'
 
 export interface ConsumableState {
     burgers: Burger[] | null;
     drinks: Drink[] | null;
-    ingredients: string[] | null;
+    ingredients: Ingredients | null;
 }
 
 export const useConsumableStore = defineStore('consumables', {
@@ -33,8 +33,8 @@ export const useConsumableStore = defineStore('consumables', {
     }
   },
   getters: {
-    allBurgers: (state) => state.burgers,
-    allDrinks: (state) => state.drinks,
-    allIngredients: (state) => state.ingredients
+    allBurgers: (state) => state.burgers as Burger[],
+    allDrinks: (state) => state.drinks as Drink[],
+    allIngredients: (state) => state.ingredients as Ingredients
   },
 })
