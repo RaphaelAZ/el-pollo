@@ -57,6 +57,14 @@
           :condition="previousOrderStore.previousOrders.length > 0"
         />
 
+        <navbar-item
+          title=" "
+          class="mt-10"
+          :is-parent-expanded="isExpanded"
+          to="/pollo"
+          :condition="basketStore.basket.length > 0"
+        />
+
       </v-list>
     </v-navigation-drawer>
   </aside>
