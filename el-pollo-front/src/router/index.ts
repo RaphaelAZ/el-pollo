@@ -8,6 +8,8 @@ import CheckoutView from '@/views/CheckoutView.vue'
 import OrderConfirmView from '@/views/OrderConfirmView.vue'
 import BuilderView from '@/views/BuilderView.vue'
 import OrderHistoryView from '@/views/OrderHistoryView.vue'
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
 
 const publicRoutes = [
     {
@@ -34,6 +36,16 @@ const publicRoutes = [
       path: '/order/history',
       name: 'previous-orders',
       component: OrderHistoryView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
     }
 ];
 
