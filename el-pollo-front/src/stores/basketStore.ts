@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { BasketConsumable, Burger, Consumable, Drink } from '@/models/consumable'
+import type { OrderPayValues } from '@/models/order.ts'
 
 interface BasketState {
     basket: Array<Burger | Drink>
@@ -16,12 +17,20 @@ export const useBasketStore = defineStore('basket', {
         this.basket?.push(item);
     },
 
-    removeItem(id: string): void {
-        this.basket?.map((item, index) => {
-            if(item.id.toString() === id) {
-                this.basket?.slice(index);
-            }
-        })
+    /**
+     * Removes one item form the basket
+     */
+    removeOneOf(toRemove: Burger|Drink): void {
+      let alreadyDeleted = false;
+
+      this.basket = this.basket.filter((item: Burger|Drink, index) => {
+
+        if(item.id === toRemove.id && !alreadyDeleted) {
+          this.basket?.slice(index);
+          alreadyDeleted = true
+        }
+
+      })
     },
 
     resetBasket(): void {
@@ -40,8 +49,6 @@ export const useBasketStore = defineStore('basket', {
         (accumulator, current) => accumulator + current.price,
         0
       )
-
-      console.log(rawValue)
 
       if( round ) {
         return Math.floor( rawValue * 100 ) / 100
@@ -87,6 +94,27 @@ export const useBasketStore = defineStore('basket', {
       })
 
       return basketItemsWithTotal
+    },
+
+    /**
+     * Sends the order to the back-end
+     * @param formData
+     */
+    sendOrderToApi(formData: OrderPayValues): Promise<boolean> {
+
+      return new Promise((resolve, reject) => {
+        const apiTimeout = Math.floor( (Math.random() * 3600) + 1500 )
+
+        //80% chance to resolve
+        setTimeout(() => {
+          if( Math.random() >= 0.8 ) {
+            resolve(true)
+          } else {
+            reject(false)
+          }
+        }, apiTimeout)
+      })
+
     }
   },
   getters: {

@@ -37,7 +37,7 @@ const computedSubTitleText = computed(() => {
     <p>Total: {{ total }} € <Icon icon="mdi:dot" /> {{ computedSubTitleText }} </p>
 
     <p class="mt-5">
-      <v-btn color="info">
+      <v-btn to="/checkout" color="info">
         <Icon icon="mdi:money" />
         Payer
       </v-btn>
