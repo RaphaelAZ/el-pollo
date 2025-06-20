@@ -5,6 +5,7 @@ namespace App\Sys;
 use App\contracts\SysInitContract;
 use App\Controllers\BurgerController;
 use App\Controllers\ConsumablesController;
+use App\Controllers\OrderController;
 use \Bramus\Router\Router as WrappedRouter;
 
 class Router implements SysInitContract
@@ -20,8 +21,11 @@ class Router implements SysInitContract
     {
         $this->lazyRouter->mount("/api", function () {
             $this->lazyRouter->get("/consumables", $this->getRouterString(ConsumablesController::class, 'getAll'));
+
             $this->lazyRouter->get("/burgers", $this->getRouterString(BurgerController::class, 'getAll'));
             $this->lazyRouter->get("/burgers/{id}", $this->getRouterString(BurgerController::class, 'getSingle'));
+
+            $this->lazyRouter->post("/order", $this->getRouterString(OrderController::class, 'newOrder'));
         });
 
         $this->lazyRouter->run();

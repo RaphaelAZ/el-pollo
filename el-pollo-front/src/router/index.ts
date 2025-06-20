@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import OrderView from '@/views/OrderView.vue'
 import DrinksView from '@/views/DrinksView.vue'
 import BurgersView from '@/views/BurgersView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
+import OrderConfirmView from '@/views/OrderConfirmView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +33,16 @@ const router = createRouter({
       path: '/drinks',
       name: 'drinks',
       component: DrinksView,
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutView
+    },
+    {
+      path: '/checkout/confirm',
+      name: 'checkout-confirm',
+      component: OrderConfirmView,
     }
   ],
 })

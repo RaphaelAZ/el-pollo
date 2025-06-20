@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import OrderBanner from '@/components/order/OrderBanner.vue'
-import type { BasketConsumable } from '@/models/consumable.ts'
+import type { BasketConsumable, Burger, Drink } from '@/models/consumable.ts'
 import { ref } from 'vue'
 import { useBasketStore } from '@/stores/basketStore.ts'
 
@@ -11,8 +11,22 @@ const itemsRef = ref< BasketConsumable[] >(basketStore.getBasketSummary() as Bas
 const tableHeaders = [
   { title: 'Nom', sortable: true, key: 'name' },
   { title: 'Quantité', sortable: true, key: 'quantity' },
-  { title: 'Total', sortable: true, key: 'total' }
+  { title: 'Total', sortable: true, key: 'total' },
+  { title: 'Actions', sortable: false, key: 'actions' }
 ]
+
+/**
+ * Add one item to the basket
+ * @param item
+ */
+const addOneItem = (item: Burger|Drink): void => {
+  basketStore.addItem(item)
+}
+
+const removeOneItem = (item: Drink|Burger): void => {
+  basketStore.removeOneOf( item )
+}
+
 </script>
 
 <template>
@@ -40,6 +54,20 @@ const tableHeaders = [
 
         <span>{{ item.name }}</span>
       </div>
+    </template>
+
+    <template #item.actions="{ item }">
+
+      <div>
+        <v-btn class="line-action-btn" color="error" @click="removeOneItem" size="large">
+          <Icon class="h-100 w-100" icon="mdi:minus-one" />
+        </v-btn>
+
+        <v-btn class="line-action-btn" color="info" @click="addOneItem" size="large">
+          <Icon class="h-100 w-100" icon="mdi:plus-one" />
+        </v-btn>
+      </div>
+
     </template>
   </v-data-table>
 </template>
