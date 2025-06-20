@@ -87,6 +87,18 @@ const addBurgerToCart = () => {
                     {{ ingredient }}
                 </v-btn>
 
+                <div class="text-subtitle-2 mb-1">Fromages :</div>
+                <v-btn
+                    v-for="ingredient in ingredients?.cheese"
+                    :key="ingredient"
+                    class="ma-1"
+                    size="small"
+                    variant="tonal"
+                    @click="addIngredient(ingredient)"
+                >
+                    {{ ingredient }}
+                </v-btn>
+
                 <div class="text-subtitle-2 mb-1">Légumes :</div>
                 <v-btn
                     v-for="ingredient in ingredients?.vegetables"
