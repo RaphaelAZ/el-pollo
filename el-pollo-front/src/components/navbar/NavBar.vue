@@ -63,8 +63,31 @@
           :is-parent-expanded="isExpanded"
           to="/pollo"
         />
-
       </v-list>
+      <template #append>
+        <section class="mb-2" v-if="userStore.isLoggedIn">
+          <navbar-item
+            title="Profil"
+            :is-parent-expanded="isExpanded"
+            to="/login"
+            icon="emojione:key"
+          />
+        </section>
+        <section class="mb-2" v-if="!userStore.isLoggedIn">
+          <navbar-item
+            title="Connexion"
+            :is-parent-expanded="isExpanded"
+            to="/login"
+            icon="emojione:key"
+          />
+          <navbar-item
+            title="Inscription"
+            :is-parent-expanded="isExpanded"
+            to="/register"
+            icon="emojione:paperclip"
+          />
+        </section>
+      </template>
     </v-navigation-drawer>
   </aside>
 </template>
@@ -74,8 +97,10 @@ import { ref } from 'vue';
 import { useBasketStore } from '@/stores/basketStore.ts'
 import { useOrdersHistoryStore } from '@/stores/ordersHistoryStore.ts'
 import NavbarItem from '@/components/navbar/NavbarItem.vue'
+import { useUserStore } from '@/stores/userStore';
 
 const isExpanded = ref(false);
+const userStore = useUserStore();
 
 const basketStore = useBasketStore()
 const previousOrderStore = useOrdersHistoryStore()

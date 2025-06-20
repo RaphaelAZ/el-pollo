@@ -54,6 +54,7 @@ const computedSize = computed(() => {
 <template>
   <v-list-item
     v-bind="computedListItemProperties"
+    v-if="condition !== false"
   >
     <template #prepend>
 
