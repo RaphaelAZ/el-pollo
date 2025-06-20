@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import OrderBanner from '@/components/order/OrderBanner.vue'
 import type { Burger, Drink } from '@/models/consumable.ts'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useBasketStore } from '@/stores/basketStore.ts'
 
 const basketStore = useBasketStore()
@@ -13,29 +13,7 @@ const tableHeaders = [
   { title: 'Nom', sortable: true, key: 'name' },
   { title: 'Quantité', sortable: true, key: 'quantity' },
   { title: 'Total', sortable: true, key: 'total' },
-  { title: 'Actions', sortable: false, key: 'actions' }
 ]
-
-/**
- * Add one item to the basket
- * @param item
- */
-const addOneItem = (item: Burger|Drink): void => {
-  basketStore.addItem( item )
-}
-
-const removeOneItem = (item: Drink|Burger): void => {
-  basketStore.removeOneOf( item )
-}
-
-watch(
-  basketStore.basket,
-  (newBasket, oldBasket): void => {
-    itemsRef.value = basketStore.activeBasket
-    console.log("kqznjnklqzdnklzdnklqznklqzdndklznkl")
-    totalOrderRef.value = basketStore.getTotal() as number
-  }
-)
 
 const getTotalForItem = (item: Burger|Drink) => {
   const itemTotalRaw = (item.quantity as number) * item.price
@@ -82,25 +60,7 @@ const getTotalForItem = (item: Burger|Drink) => {
     <template #item.total="{ item }">
       {{ getTotalForItem(item as Burger|Drink) }}
     </template>
-
-    <template #item.actions="{ item }">
-
-      <div class="flex flex-column ga-5">
-        <v-btn class="line-action-btn" color="error" @click="removeOneItem(item)">
-          <Icon icon="mdi:minus-one" />
-        </v-btn>
-
-        <v-btn class="line-action-btn" color="info" @click="addOneItem(item)">
-          <Icon icon="mdi:plus-one" />
-        </v-btn>
-      </div>
-
-    </template>
   </v-data-table>
-
-  <div v-else>
-    <h2>Vous n'avez pas de commande.</h2>
-  </div>
 </template>
 
 <style lang="css">

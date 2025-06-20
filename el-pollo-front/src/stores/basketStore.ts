@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { BasketConsumable, Burger, Consumable, Drink } from '@/models/consumable'
+import type { Burger, Drink } from '@/models/consumable'
 import type { OrderPayValues } from '@/models/order.ts'
 
 interface BasketState {
@@ -9,28 +9,51 @@ interface BasketState {
 export const useBasketStore = defineStore('basket', {
   state: (): BasketState => {
     return {
-        basket: []
+      basket: []
     }
   },
   actions: {
     addItem(item: Drink | Burger): void {
-        this.basket?.push(item);
+      const targetItem = this.basket.find((currentItem: Drink|Burger) => {
+        return currentItem.id === item.id
+      })
+
+      if( !targetItem ) {
+
+        const newItem = {
+          ...item,
+          quantity: 1
+        }
+
+        this.basket.push(newItem);
+      } else {
+
+        this.basket = this.basket.map((currentItem: Burger|Drink) => {
+          if( currentItem.id === item.id ) {
+            (currentItem.quantity as number)++
+          }
+
+          return currentItem
+        })
+      }
+
+
     },
 
     /**
      * Removes one item form the basket
      */
     removeOneOf(toRemove: Burger|Drink): void {
-      let alreadyDeleted = false;
-
-      this.basket = this.basket.filter((item: Burger|Drink, index) => {
-
-        if(item.id === toRemove.id && !alreadyDeleted) {
-          this.basket?.slice(index);
-          alreadyDeleted = true
+      this.basket = this.basket.map( (currentItem: Burger|Drink) => {
+        if( currentItem.id === toRemove.id ) {
+          currentItem.quantity!--
         }
 
-      })
+        return currentItem
+      } )
+
+      //filtrage des quantités invalides dans le pannier
+      this.basket = this.basket.filter( (currentItem: Burger|Drink) => currentItem.quantity > 0 )
     },
 
     resetBasket(): void {
@@ -46,7 +69,7 @@ export const useBasketStore = defineStore('basket', {
       }
 
       const rawValue = this.basket.reduce(
-        (accumulator, current) => accumulator + current.price,
+        (accumulator, current) => accumulator + (current.price * current.quantity as number),
         0
       )
 
@@ -55,45 +78,6 @@ export const useBasketStore = defineStore('basket', {
       }
 
       return rawValue
-    },
-
-    /**
-     * Returns a summary of the current basket.
-     */
-    getBasketSummary(): BasketConsumable[] {
-
-      //console.log(this.basket)
-
-      //value is the number of this item in the basket
-      const basketItemsGroup: Map<Consumable, number> = new Map()
-
-      this.basket?.forEach(( current: Drink|Burger ) => {
-
-        let newQuantity = 1;
-
-        if( basketItemsGroup.has(current) ) {
-          newQuantity = basketItemsGroup.get(current) as number + 1
-          //console.log("a cet item", current, basketItemsGroup.get(current))
-        }
-
-        basketItemsGroup.set(current as Consumable, newQuantity)
-      })
-
-      //and calculate the total from the map
-      const basketItemsWithTotal: BasketConsumable[] = []
-
-      basketItemsGroup.forEach((nbrOfItems: number, consumable: Consumable) => {
-
-        const singleBasketTotalItem = {
-          ...consumable,
-          quantity: nbrOfItems,
-          total: consumable.price * nbrOfItems
-        } as BasketConsumable
-
-        basketItemsWithTotal.push(singleBasketTotalItem)
-      })
-
-      return basketItemsWithTotal
     },
 
     /**
@@ -118,7 +102,7 @@ export const useBasketStore = defineStore('basket', {
     }
   },
   getters: {
-    activeBasket: (state) => state,
+    activeBasket: (state) => state.basket,
     isConsumableAlreadyIn: (state): ((id: string) => boolean) => {
         return (id: string): boolean => {
             if(!!state.basket) {

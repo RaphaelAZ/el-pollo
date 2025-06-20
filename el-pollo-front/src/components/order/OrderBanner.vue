@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, type PropType } from 'vue'
-import type { BasketConsumable } from '@/models/consumable'
 import { sIfCount } from '@/utils/string-utils.ts'
+import type { Consumable } from '@/models/consumable.ts'
 
 const props = defineProps({
   items: {
-    type: Array as PropType< BasketConsumable[] >,
+    type: Array as PropType< Consumable[] >,
     required: false,
     default: () => null
   },
