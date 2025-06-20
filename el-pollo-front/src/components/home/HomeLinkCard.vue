@@ -1,28 +1,48 @@
 <script setup lang="ts">
-const props = defineProps({
+import type { PropType } from 'vue'
+
+defineProps({
   title: {
     type: String,
     required: true,
   },
+  carousel: {
+    type: Array as PropType<string[]>,
+    required: false,
+  },
   image: {
     type: String,
     required: false,
-    default: () => null,
   }
 })
+
 </script>
 
 <template>
   <v-card>
     <v-card-title>{{ title }}</v-card-title>
 
-    <template v-if="image">
+    <template v-if="image || (carousel && carousel.length > 0)">
       <v-divider></v-divider>
 
+      <v-carousel
+        cycle
+        hide-delimiter-background
+        hide-delimiters
+        v-if="(carousel && carousel.length > 0)"
+      >
+        <v-card-item
+          v-for="(singleImage, key) in carousel"
+          :key="key"
+          :src="singleImage"
+          cover
+        />
+      </v-carousel>
+
       <v-img
-        cover
+        v-else
         :src="image"
-        max-height="800"
+        cover
       />
     </template>
 
