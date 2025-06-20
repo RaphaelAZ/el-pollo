@@ -70,7 +70,7 @@
             title="Profil"
             :is-parent-expanded="isExpanded"
             to="/login"
-            icon="emojione:key"
+            icon="emojione:baby-chick"
           />
         </section>
         <section class="mb-2" v-if="!userStore.isLoggedIn">
