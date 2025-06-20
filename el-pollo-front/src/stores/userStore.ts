@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import type { LoginData, RegisterData, User } from '@/models/user'
-import { getHttpClient } from '@/plugins/http-client'
 
 export const useUserStore = defineStore('user', {
   state: (): User => {
@@ -18,11 +17,22 @@ export const useUserStore = defineStore('user', {
 
     async loginAttempt(user: LoginData): Promise<boolean> {
       try {
-        const response = await getHttpClient().post('api/login');
-        this.fetchUser({
-          username: "TOTO",
-          email: user.email
+        /*
+        const response = await getHttpClient().post('api/login', {
+          email: user.email,
+          password: user.password,
         });
+
+         */
+
+        setTimeout(() => {
+          this.fetchUser({
+            username: user.email,
+            email: user.email
+          });
+        }, (Math.random() * 6000) + 1500)
+
+
         return true;
       } catch(e) {
         console.error(e);
@@ -32,13 +42,26 @@ export const useUserStore = defineStore('user', {
 
     async registerAttempt(user: RegisterData): Promise<boolean> {
       try {
-        const response = await getHttpClient().post('api/register');
-        if(response) {
+
+        /*
+        const response = await getHttpClient().post('api/register', {
+          email: user.email,
+          password: user.password,
+          username: user.username
+        });
+
+         */
+
+        setTimeout(() => {
           this.loginAttempt({
             email: user.email,
             password: user.password
           })
-        }
+        }, (Math.random() * 6000) + 1500)
+
+        //if(response) {
+
+        //}
         return true;
       } catch(e) {
         console.error(e);

@@ -4,30 +4,29 @@ namespace App\Sys;
 
 class Config
 {
-    private int $minApiImageNumber = 1;
-    private int $maxApiImageNumber = 87;
+    private string $usersFileName = 'users.json';
+
+    private string $jwtSecret = 'a8aaf7e3391320fec3cae68be741de84591ece8920fd0f1493b2e865c9a84d3f';
 
     // ---------------------------------------------------------------
 
-    public function getMinApiImageNumber(): int
+    public function getUsersFileName(): string
     {
-        return $this->minApiImageNumber;
+        return $this->usersFileName;
     }
 
-    public function setMinApiImageNumber(int $minApiImageNumber): void
+    public function setUsersFileName(string $usersFileName): void
     {
-        $this->minApiImageNumber = $minApiImageNumber;
+        $this->usersFileName = $usersFileName;
     }
 
-    public function getMaxApiImageNumber(): int
+    public function getJwtSecret(): string
     {
-        return $this->maxApiImageNumber;
+        return $this->jwtSecret;
     }
 
-    public function setMaxApiImageNumber(int $maxApiImageNumber): void
+    public function setJwtSecret(string $jwtSecret): void
     {
-        $this->maxApiImageNumber = $maxApiImageNumber;
+        $this->jwtSecret = $jwtSecret;
     }
-
-
 }

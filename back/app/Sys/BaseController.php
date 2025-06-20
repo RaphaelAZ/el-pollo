@@ -2,14 +2,15 @@
 
 namespace App\Sys;
 
+use App\Classes\Entity\User;
 use JetBrains\PhpStorm\NoReturn;
 
 class BaseController
 {
     #[NoReturn]
-    protected function respondJson(mixed $data): void
+    protected function respondJson(mixed $data, int $code = 200): void
     {
-        $this->setGenericHeaders();
+        $this->setGenericHeaders($code);
         header('Content-Type: application/json');
 
         echo json_encode($data);
@@ -53,8 +54,59 @@ class BaseController
         exit(0);
     }
 
+    #[NoReturn]
+    protected function respondOnlyCode(int $code)
+    {
+        $this->setGenericHeaders($code);
+        exit(0);
+    }
+
     protected function getConfig(): Config
     {
         return new Config();
+    }
+
+    /**
+     * Creates a data file if it does not exist in the FS
+     * @param string $name
+     * @param string|null $contents
+     * @return void
+     */
+    protected function createDataFileIfNotExists(string $name, string $contents = null): void
+    {
+        $filePath = sprintf("%s/%s", DATA_DIR, $name);
+
+        if( !file_exists($filePath) ) {
+            touch($filePath);
+            chmod($filePath, 0777);
+            file_put_contents($filePath, $contents);
+        }
+    }
+
+    /**
+     * @param array $users
+     * @return User[]
+     */
+    protected function hydrateUsers(array $users): array
+    {
+        return array_map(function ($singleUser) {
+            return User::fromJson($singleUser);
+        }, $users);
+    }
+
+    protected function dumpDataFile(string $fileName, mixed $data): bool
+    {
+        try {
+            file_put_contents(
+                realpath(
+                    sprintf("%s/%s", DATA_DIR, $fileName)
+                ),
+                $data
+            );
+
+            return true;
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }
