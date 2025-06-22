@@ -1,0 +1,57 @@
+[
+  {
+    "type": "bread",
+    "ingredients": [
+      "Pain classique",
+      "Pain brioché",
+      "Pain complet"
+    ]
+  },
+  {
+    "type": "meat",
+    "ingredients": [
+      "Steak de boeuf",
+      "Poulet croustillant",
+      "Galette végétarienne",
+      "Bacon",
+      "Oeuf"
+    ]
+  },
+  {
+    "type": "cheese",
+    "ingredients": [
+      "Cheddar",
+      "Fromage raclette",
+      "Emmental",
+      "Mozzarella"
+    ]
+  },
+  {
+    "type": "vegetables",
+    "ingredients": [
+      "Salade",
+      "Tomate",
+      "Cornichons",
+      "Oignons rouges",
+      "Oignons frits",
+      "Champignons sautés",
+      "Avocat",
+      "Jalapeños",
+      "Chou rouge",
+      "Roquette"
+    ]
+  },
+  {
+    "type": "sauce",
+    "ingredients": [
+      "Sauce barbecue",
+      "Sauce mayonnaise",
+      "Sauce ketchup",
+      "Sauce moutarde",
+      "Sauce curry",
+      "Sauce fromage",
+      "Sauce piquante",
+      "Sauce aigre-douce"
+    ]
+  }
+]

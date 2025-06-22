@@ -16,16 +16,6 @@
       "pickes",
       "onion",
       "lettuce"
-    ],
-    "addresses": [
-      {
-        "addressId": 0,
-        "number": "75",
-        "line1": "Venn Street",
-        "line2": "Clapham",
-        "postcode": "SW4 0BD",
-        "country": "United Kingdom"
-      }
     ]
   },
   {

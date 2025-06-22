@@ -109,4 +109,16 @@ class BaseController
             return false;
         }
     }
+
+    /**
+     * @throws \JsonException
+     */
+    protected function getInputJson(): array
+    {
+        return json_decode(
+            file_get_contents('php://input'),
+            true,
+            flags: JSON_THROW_ON_ERROR
+        );
+    }
 }

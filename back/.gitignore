@@ -1,2 +1,5 @@
 vendor
 /app/data/users.json
+var
+.env
+/docker/volumes/

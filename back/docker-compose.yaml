@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: ${DB_CONTAINER_NAME}
+    ports:
+      - "${MONGO_PORT}:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB}
+
+    volumes:
+      - ./docker/volumes/db:/data/db
+      - ./docker/start/db/:/docker-entrypoint-initdb.d/
+
+volumes:
+  mongodata:

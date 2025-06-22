@@ -31,48 +31,57 @@ class AuthController extends BaseController
      * Attempts to log in in the user
      * @return void
      * @throws RandomException
+     * @throws \JsonException
      */
     public function login()
     {
-        $postData = LoginPostData::fromRequest($_GET, $_POST);
+        try {
+            $jsonData = $this->getInputJson();
 
-        if( !$postData->password || !$postData->email ) {
+            if (empty($jsonData["email"]) || empty($jsonData["password"])) {
+                $this->respondJson([
+                    'message' => 'Veuillez préciser un mot de passe ou un email'
+                ], 400);
+            }
+
+            $postData = new LoginPostData($jsonData['email'], $jsonData['password']);
+
+            $allUsers = $this->getJsonData($this->config->getUsersFileName());
+
+            $hydratedUsers = $this->hydrateUsers($allUsers);
+
+            //take the matching user via email and password
+            /** @var User[] $allMatchingUsers */
+            $allMatchingUsers = array_filter($hydratedUsers, function ($singleUser) use ($postData) {
+                return $singleUser->getEmail() === $postData->email && $singleUser->getPassword() === $postData->password;
+            });
+
+            if (empty($allMatchingUsers)) {
+                $this->respondJson([
+                    'message' => "Email ou MDP invalide."
+                ], 401);
+            }
+
+            $targetUser = array_shift($allMatchingUsers);
+
+            //sign the JWT token
+            $token = $this->generateToken([
+                'user' => $targetUser->toArray(),
+            ]);
+
+            //return the token
             $this->respondJson([
-                'message' => 'Veuillez préciser un mot de passe ou un email'
-            ], 400);
-        }
-
-        $allUsers = $this->getJsonData($this->config->getUsersFileName());
-
-        $hydratedUsers = $this->hydrateUsers($allUsers);
-
-        //take the matching user via email and password
-        /** @var User[] $allMatchingUsers */
-        $allMatchingUsers = array_filter($hydratedUsers, function ($singleUser) use ($postData) {
-            return $singleUser->getEmail() === $postData->email && $singleUser->getPassword() === $postData->password;
-        });
-
-        if( empty($allMatchingUsers) ) {
+                'token' => $token->toString(),
+                'user' => [
+                    'email' => $targetUser->getEmail(),
+                    'username' => $targetUser->getUsername()
+                ]
+            ], 200);
+        } catch (\Throwable $e) {
             $this->respondJson([
-                'message' => "Email ou MDP invalide."
-            ], 401);
+                "message" => "Erreur inconnue lors de votre connexion"
+            ], 500);
         }
-
-        $targetUser = array_shift($allMatchingUsers);
-
-        //sign the JWT token
-        $token = $this->generateToken([
-            'user' => $targetUser->toArray(),
-        ]);
-
-        //return the token
-        $this->respondJson([
-            'token' => $token,
-            'user' => [
-                'email' => $targetUser->getEmail(),
-                'username' => $targetUser->getUsername()
-            ]
-        ], 200);
     }
 
     /**
@@ -104,37 +113,49 @@ class AuthController extends BaseController
      */
     public function register()
     {
-        $postData = RegisterPostData::fromRequest($_GET, $_POST);
+        try {
+            $jsonData = $this->getInputJson();
 
-        if( !$postData->password || !$postData->email || !$postData->username ) {
+            if ( empty($jsonData['email']) || empty($jsonData['username']) || empty($jsonData['password']) ) {
+                $this->respondJson([
+                    'message' => "Veuillez préciser un mot de passe, un email et nom d'utilisateur"
+                ], 400);
+            }
+
+            $postData = new RegisterPostData(
+                $jsonData['email'],
+                $jsonData['password'],
+                $jsonData['username']
+            );
+
+            $allUsers = $this->getJsonData($this->getConfig()->getUsersFileName());
+            $hydratedUsers = $this->hydrateUsers($allUsers);
+
+            //check if any user has the same password or username
+            /** @var User[] $allMatchingUsers */
+            $allMatchingUsers = array_filter($hydratedUsers, function ($singleUser) use ($postData) {
+                return $singleUser->getEmail() === $postData->email || $singleUser->getUsername() === $postData->username;
+            });
+
+            if (!empty($allMatchingUsers)) {
+                $this->respondJson([
+                    'message' => "Cet utilisateur existe déjà."
+                ], 409);
+            }
+
+            //mise des données dans le json
+            $insertedUser = new User($postData->email, $postData->password, $postData->username);
+            $allUsers[] = $insertedUser->toArray();
+
+            $this->dumpDataFile($this->config->getUsersFileName(), $allUsers);
+
             $this->respondJson([
-                'message' => "Veuillez préciser un mot de passe, un email et nom d'utilisateur"
-            ], 400);
-        }
-
-        $allUsers = $this->getJsonData( $this->getConfig()->getUsersFileName() );
-        $hydratedUsers = $this->hydrateUsers($allUsers);
-
-        //check if any user has the same password or username
-        /** @var User[] $allMatchingUsers */
-        $allMatchingUsers = array_filter($hydratedUsers, function ($singleUser) use ($postData) {
-            return $singleUser->getEmail() === $postData->email || $singleUser->getUsername() === $postData->username;
-        });
-
-        if( !empty($allMatchingUsers) ) {
+                'message' => "Utilisateur créé"
+            ], 201);
+        } catch (\Throwable $e) {
             $this->respondJson([
-                'message' => "Cet utilisateur existe déjà."
-            ], 409);
+                "message" => "Erreur inconnue lors de l'inscription"
+            ], 500);
         }
-
-        //mise des données dans le json
-        $insertedUser = new User( $postData->email, $postData->password, $postData->username );
-        $allUsers[] = $insertedUser->toArray();
-
-        $this->dumpDataFile($this->config->getUsersFileName(), $allUsers);
-
-        $this->respondJson([
-            'message' => "Utilisateur inséré"
-        ], 200);
     }
 }

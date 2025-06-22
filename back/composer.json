@@ -11,11 +11,14 @@
         "symfony/var-dumper": "^7.3"
     },
     "require": {
+        "php": "^8.2",
         "bramus/router": "~1.6",
         "lcobucci/jwt": "^5.5"
     },
     "scripts": {
-        "start": "php -S 0.0.0.0:8000 -t public/"
+        "start": [
+            "php -S 0.0.0.0:8000 -t public/"
+        ]
     },
     "config": {
         "process-timeout": 0
