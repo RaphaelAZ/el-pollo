@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Classes\Data\LoginPostData;
-use App\Classes\Data\RegisterPostData;
-use App\Classes\Entity\User;
+use App\Enum\DbCollection;
 use App\Sys\BaseController;
 use App\Sys\Config;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
@@ -13,25 +11,14 @@ use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\Builder;
 use Lcobucci\JWT\UnencryptedToken;
+use MongoDB\Model\BSONDocument;
 use Random\RandomException;
 
 class AuthController extends BaseController
 {
-    private readonly Config $config;
-
-    public function __construct()
-    {
-        $this->config = new Config();
-
-        $this->createDataFileIfNotExists(  $this->config->getUsersFileName(), "[]");
-    }
-
     /**
-     * FIXME: POST and GET variables are not taken by PHP ?
      * Attempts to log in in the user
      * @return void
-     * @throws RandomException
-     * @throws \JsonException
      */
     public function login()
     {
@@ -44,32 +31,26 @@ class AuthController extends BaseController
                 ], 400);
             }
 
-            $postData = new LoginPostData($jsonData['email'], $jsonData['password']);
+            $authService = $this->getAuthService();
 
-            $allUsers = $this->getJsonData($this->config->getUsersFileName());
+            $targetUserDocument = $authService->checkUserCredentials($jsonData['email'], $jsonData['password']);
 
-            $hydratedUsers = $this->hydrateUsers($allUsers);
-
-            //take the matching user via email and password
-            /** @var User[] $allMatchingUsers */
-            $allMatchingUsers = array_filter($hydratedUsers, function ($singleUser) use ($postData) {
-                return $singleUser->getEmail() === $postData->email && $singleUser->getPassword() === $postData->password;
-            });
-
-            if (empty($allMatchingUsers)) {
+            //if the credentials are wrong
+            if( !$targetUserDocument instanceof BSONDocument ) {
                 $this->respondJson([
-                    'message' => "Email ou MDP invalide."
+                    'message' => "Email ou mot de passe incorrect."
                 ], 401);
             }
 
-            $targetUser = array_shift($allMatchingUsers);
+            //convert to entity
+            $targetUser = $this->getEntityHelper()->userBsonToUserEntity($targetUserDocument);
 
-            //sign the JWT token
-            $token = $this->generateToken([
+            //generate a JWT token
+            $token = $authService->generateToken([
                 'user' => $targetUser->toArray(),
             ]);
 
-            //return the token
+            //return the token and the user data
             $this->respondJson([
                 'token' => $token->toString(),
                 'user' => [
@@ -85,30 +66,6 @@ class AuthController extends BaseController
     }
 
     /**
-     * @throws RandomException
-     */
-    private function generateToken(array $data): UnencryptedToken
-    {
-        $tokenBuilder = Builder::new(new JoseEncoder(), ChainedFormatter::default());
-        $algorithm    = new Sha256();
-        $signingKey   = InMemory::plainText($this->config->getJwtSecret());
-
-        $now = new \DateTimeImmutable();
-
-        $token = $tokenBuilder
-            ->issuedBy('https://back.el-pollo.com')
-            ->issuedAt($now)
-            ->canOnlyBeUsedAfter($now->modify('+1 hour'));
-
-        foreach ($data as $claimKey => $claimValue) {
-            $token->withClaim($claimKey, $claimValue);
-        }
-
-        return $token->getToken($algorithm, $signingKey);
-    }
-
-    /**
-     * FIXME: POST and GET variables are not taken by PHP ?
      * @return void
      */
     public function register()
@@ -122,32 +79,26 @@ class AuthController extends BaseController
                 ], 400);
             }
 
-            $postData = new RegisterPostData(
-                $jsonData['email'],
-                $jsonData['password'],
-                $jsonData['username']
-            );
+            $authService = $this->getAuthService();
 
-            $allUsers = $this->getJsonData($this->getConfig()->getUsersFileName());
-            $hydratedUsers = $this->hydrateUsers($allUsers);
-
-            //check if any user has the same password or username
-            /** @var User[] $allMatchingUsers */
-            $allMatchingUsers = array_filter($hydratedUsers, function ($singleUser) use ($postData) {
-                return $singleUser->getEmail() === $postData->email || $singleUser->getUsername() === $postData->username;
-            });
-
-            if (!empty($allMatchingUsers)) {
+            if ( !$authService->isUserUnique($jsonData['email'], $jsonData['username']) ) {
                 $this->respondJson([
                     'message' => "Cet utilisateur existe déjà."
                 ], 409);
             }
 
-            //mise des données dans le json
-            $insertedUser = new User($postData->email, $postData->password, $postData->username);
-            $allUsers[] = $insertedUser->toArray();
+            $usersCollection = $this->getDatabaseWrapper()->getCollection(DbCollection::User);
 
-            $this->dumpDataFile($this->config->getUsersFileName(), $allUsers);
+            //insertion des données dans la collection
+            $insertResult = $usersCollection->insertOne([
+                'email' => $jsonData['email'],
+                'username' => $jsonData['username'],
+                'password' => password_hash( $jsonData['password'], $this->getConfig()->getPasswordHashAlgo() )
+            ]);
+
+            if( $insertResult->getInsertedCount() !== 1 ) {
+                throw new \RuntimeException('Unknown error when inserting the new user.');
+            }
 
             $this->respondJson([
                 'message' => "Utilisateur créé"

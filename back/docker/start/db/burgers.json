@@ -1,6 +1,5 @@
 [
   {
-    "id": 0,
     "name": "Tribute Burger",
     "price": 21.55,
     "image": "https://foodish-api.com/images/burger/burger1.jpg",
@@ -19,7 +18,6 @@
     ]
   },
   {
-    "id": 1,
     "name": "Pulled Mooshie",
     "price": 24.36,
     "image": "https://foodish-api.com/images/burger/burger50.jpg",
@@ -32,7 +30,6 @@
     ]
   },
   {
-    "id": 2,
     "name": "Krabby Patty",
     "price": 22.81,
     "image": "https://foodish-api.com/images/burger/burger61.jpg",
@@ -52,7 +49,6 @@
     ]
   },
   {
-    "id": 3,
     "name": "The Good Burger",
     "price": 8.08,
     "image": "https://foodish-api.com/images/burger/burger78.jpg",
@@ -68,7 +64,6 @@
     ]
   },
   {
-    "id": 4,
     "name": "Crunchy Nacho Burger",
     "price": 15.69,
     "image": "https://foodish-api.com/images/burger/burger52.jpg",
@@ -87,7 +82,6 @@
     ]
   },
   {
-    "id": 5,
     "name": "Barbie Burger",
     "price": 19,
     "image": "https://jacksandwaffles.nl/wp-content/uploads/2024/01/WhatsApp-Image-2024-02-01-at-13.23.18-2.jpeg",
@@ -103,7 +97,6 @@
     ]
   },
   {
-    "id": 6,
     "name": "Curry On My Wayward Bun",
     "price": 12.69,
     "image": "https://foodish-api.com/images/burger/burger81.jpg",
@@ -116,7 +109,6 @@
     ]
   },
   {
-    "id": 7,
     "name": "MEISTER ALLER KLASSEN",
     "price": 3.02,
     "image": "https://foodish-api.com/images/burger/burger60.jpg",
@@ -131,7 +123,6 @@
     ]
   },
   {
-    "id": 8,
     "name": "Vegetarian Burger (Indian Style)",
     "price": 8.85,
     "image": "https://foodish-api.com/images/burger/burger30.jpg",
@@ -147,7 +138,6 @@
     ]
   },
   {
-    "id": 9,
     "name": "Fat Santa",
     "price": 18.22,
     "image": "https://foodish-api.com/images/burger/burger78.jpg",
@@ -164,7 +154,6 @@
     ]
   },
   {
-    "id": 10,
     "name": "Blondie",
     "price": 17.89 ,
     "image": "https://foodish-api.com/images/burger/burger56.jpg",
@@ -183,7 +172,6 @@
     ]
   },
   {
-    "id": 11,
     "name": "Monster Burger",
     "price": 22.41,
     "image": "https://foodish-api.com/images/burger/burger46.jpg",
@@ -203,7 +191,6 @@
     ]
   },
   {
-    "id": 12,
     "name": "Buffalo chicken burger",
     "price": 16.67,
     "image": "https://foodish-api.com/images/burger/burger80.jpg",
@@ -218,7 +205,6 @@
     ]
   },
   {
-    "id": 13,
     "name": "Cheatday Burger",
     "price": 24.12,
     "image": "https://foodish-api.com/images/burger/burger10.jpg",
@@ -235,7 +221,6 @@
     ]
   },
   {
-    "id": 14,
     "name": "The Truffler (vegan)",
     "price": 21.12,
     "image": "https://foodish-api.com/images/burger/burger34.jpg",
@@ -253,7 +238,6 @@
     ]
   },
   {
-    "id": 15,
     "name": "Aloette Buger",
     "price": 8.45,
     "image": "https://foodish-api.com/images/burger/burger23.jpg",
@@ -268,7 +252,6 @@
     ]
   },
   {
-    "id": 16,
     "name": "BBQ Burger",
     "price": 7.78 ,
     "image": "https://foodish-api.com/images/burger/burger40.jpg",
@@ -286,7 +269,6 @@
     ]
   },
   {
-    "id": 17,
     "name": "Carroll's Cheese Burger",
     "price": 23.23,
     "image": "https://foodish-api.com/images/burger/burger43.jpg",
@@ -303,7 +285,6 @@
     ]
   },
   {
-    "id": 18,
     "name": "Mojitto Burger",
     "price": 18.83 ,
     "image": "https://foodish-api.com/images/burger/burger11.jpg",
@@ -317,7 +298,6 @@
     ]
   },
   {
-    "id": 19,
     "name": "Burger de Salopard",
     "price": 3.89,
     "image": "https://foodish-api.com/images/burger/burger32.jpg",
@@ -334,7 +314,6 @@
     ]
   },
   {
-    "id": 20,
     "name": "Du Brown",
     "price": 23.13,
     "image": "https://foodish-api.com/images/burger/burger26.jpg",
@@ -354,7 +333,6 @@
     ]
   },
   {
-    "id": 21,
     "name": "Melting Potes",
     "price": 10.81,
     "image": "https://foodish-api.com/images/burger/burger43.jpg",
@@ -370,7 +348,6 @@
     ]
   },
   {
-    "id": 22,
     "name": "Big Fernand",
     "price": 18.64 ,
     "image": "https://foodish-api.com/images/burger/burger75.jpg",
@@ -386,7 +363,6 @@
     ]
   },
   {
-    "id": 23,
     "name": "PNY Burger",
     "price": 24.71,
     "image": "https://foodish-api.com/images/burger/burger2.jpg",
@@ -402,7 +378,6 @@
     ]
   },
   {
-    "id": 24,
     "name": "231 East",
     "price": 23.90,
     "image": "https://foodish-api.com/images/burger/burger77.jpg",
@@ -421,7 +396,6 @@
     ]
   },
   {
-    "id": 25,
     "name": "Cajun Black Bean Burger",
     "price": 14.04 ,
     "image": "https://foodish-api.com/images/burger/burger44.jpg",
@@ -439,7 +413,6 @@
     ]
   },
   {
-    "id": 26,
     "name": "Hatch Green Chile Bacon Burger",
     "price": 24.03,
     "image": "https://foodish-api.com/images/burger/burger25.jpg",
@@ -454,7 +427,6 @@
     ]
   },
   {
-    "id": 27,
     "name": "The Street Burgers and Coctail Bar Prague 1",
     "price": 12.34,
     "image": "https://foodish-api.com/images/burger/burger60.jpg",

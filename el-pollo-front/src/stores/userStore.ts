@@ -14,19 +14,21 @@ export const useUserStore = defineStore('user', {
     fetchUser(user: User): void {
       this.username = user.username;
       this.email = user.email;
+      this.jwt = user.jwt;
     },
 
     async loginAttempt(user: LoginData): Promise<boolean> {
       try {
-        const response = await getHttpClient().post('api/login', {
+        const response: LoginApiData = (await getHttpClient().post('api/login', {
           email: user.email,
           password: user.password,
-        });
+        })).data as LoginApiData;
 
         if( response ) {
           this.fetchUser({
-            username: user.email,
-            email: user.email
+            username: response.user.username,
+            email: response.user.email,
+            jwt: response.token
           });
 
           return true;
@@ -55,7 +57,6 @@ export const useUserStore = defineStore('user', {
             password: user.password
           })
 
-
           return true
         }
 
@@ -77,3 +78,12 @@ export const useUserStore = defineStore('user', {
     isLoggedIn: (state): boolean => !!state.username && !!state.email
   },
 })
+
+
+export interface LoginApiData {
+  token: string,
+  user: {
+    email: string,
+    username: string
+  }
+}

@@ -4,6 +4,7 @@ namespace App\Classes\Entity;
 
 use App\Contracts\Arrayable;
 use App\Contracts\Jsonable;
+use MongoDB\BSON\ObjectId;
 
 class User implements Arrayable, Jsonable
 {
@@ -11,6 +12,7 @@ class User implements Arrayable, Jsonable
         private ?string $email = null,
         private ?string $password = null,
         private ?string $username = null,
+        private ?ObjectId $id = null,
     ) {
     }
 
@@ -20,6 +22,7 @@ class User implements Arrayable, Jsonable
             'email' => $this->email,
             'password' => $this->password,
             'username' => $this->username,
+            'id' => (string) $this->id
         ];
     }
 
@@ -64,6 +67,17 @@ class User implements Arrayable, Jsonable
     public function setUsername(?string $username): User
     {
         $this->username = $username;
+        return $this;
+    }
+
+    public function getId(): ?ObjectId
+    {
+        return $this->id;
+    }
+
+    public function setId(?ObjectId $id): User
+    {
+        $this->id = $id;
         return $this;
     }
 }

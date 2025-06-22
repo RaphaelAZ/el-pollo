@@ -4,9 +4,14 @@ use App\Sys\App;
 
 include_once "../vendor/autoload.php";
 
+/** The absolute path towards the 'public' directory. */
 const PUBLIC_DIR = __DIR__;
-define("APP_DIR", realpath(PUBLIC_DIR . "/../app/"));
-define("DATA_DIR", realpath(APP_DIR . "/data"));
+
+/** The absolute path of the root folder for the project. */
+define("ROOT_DIR", realpath(PUBLIC_DIR . "/../"));
+
+/** The absolute path of the PHP files for the app. */
+define("APP_DIR", realpath(ROOT_DIR . "app/"));
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');

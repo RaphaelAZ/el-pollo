@@ -33,39 +33,45 @@
 </template>
 
 <script lang="ts" setup>
-import { SnackBarStatus } from '@/models/snackBarParams';
-import type { LoginData } from '@/models/user';
+import { SnackBarStatus } from '@/models/snackBarParams'
+import type { LoginData } from '@/models/user'
 import router from '@/router'
-import { useSnackbarStore } from '@/stores/snackBarStore';
-import { useUserStore } from '@/stores/userStore';
-import { passwordRules, emailRules } from "@/utils/rulesUtils";
-import { ref } from "vue";
+import { useSnackbarStore } from '@/stores/snackBarStore'
+import { useUserStore } from '@/stores/userStore'
+import { emailRules, passwordRules } from '@/utils/rulesUtils'
+import { ref } from 'vue'
 
-const snackBar = useSnackbarStore();
-const userStore = useUserStore();
+const snackBar = useSnackbarStore()
+const userStore = useUserStore()
 
-const email = ref('');
-const password = ref('');
-const isFormValid = ref(false);
+const email = ref('')
+const password = ref('')
+const isFormValid = ref(false)
 
 const handleLogin = async () => {
   if (isFormValid.value) {
     const loginData: LoginData = {
       email: email.value,
       password: password.value,
-    };
+    }
 
     await userStore.loginAttempt(loginData).then((response: boolean) => {
       if (response) {
-        router.push('/home');
+        router.push('/home')
+
+        snackBar.showSnackbar({
+          message: `Identifiants corrects. Bienvenue, ${userStore.username}`,
+          status: SnackBarStatus.SUCCESS,
+        })
+
       } else {
         snackBar.showSnackbar({
-          message: 'Nom d\'utilisateur ou mot de passe incorrect. Veuillez réessayer.',
+          message: "Nom d'utilisateur ou mot de passe incorrect. Veuillez réessayer.",
           status: SnackBarStatus.ERROR,
-          timer: 5000
-        });
+          timer: 5000,
+        })
       }
-    });
+    })
   }
-};
+}
 </script>

@@ -1,3 +1,4 @@
+# Import des fichiers JSON
 mongoimport --username "$MONGO_INITDB_ROOT_USERNAME" \
             --password "$MONGO_INITDB_ROOT_PASSWORD" \
             --authenticationDatabase admin \
@@ -21,3 +22,13 @@ mongoimport --username "$MONGO_INITDB_ROOT_USERNAME" \
             --collection ingredients \
             --file /docker-entrypoint-initdb.d/ingredients.json \
             --jsonArray
+
+# Création des collections utilisateurs et commandes
+mongosh --username "$MONGO_INITDB_ROOT_USERNAME" \
+      --password "$MONGO_INITDB_ROOT_PASSWORD" \
+      --authenticationDatabase "admin" \
+      --eval "
+        db = db.getSiblingDB('$MONGO_INITDB_DATABASE');
+        db.createCollection('users');
+        db.createCollection('orders');
+      "

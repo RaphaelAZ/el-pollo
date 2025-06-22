@@ -3,10 +3,36 @@
 namespace App\Sys;
 
 use App\Classes\Entity\User;
+use App\Services\AuthService;
+use App\Services\EntityService;
 use JetBrains\PhpStorm\NoReturn;
 
 class BaseController
 {
+    private AppDatabase $database;
+
+    private EntityService $entityHelper;
+
+    private AuthService $authService;
+
+    private Config $config;
+
+    public function __construct()
+    {
+        //config
+        $this->config = new Config();
+
+        //connect to database
+        $this->database = AppDatabase::getInstance();
+        $this->database->connect();
+
+        //services and helpers
+        $this->entityHelper = new EntityService();
+        $this->authService = new AuthService($this->config, $this->database);
+    }
+
+
+
     #[NoReturn]
     protected function respondJson(mixed $data, int $code = 200): void
     {
@@ -30,23 +56,6 @@ class BaseController
         }
     }
 
-    protected function getJsonData(string $fileName, bool $associative = true): mixed
-    {
-        //get file contents
-        $fileContents = file_get_contents(
-            realpath(
-                sprintf("%s/%s", DATA_DIR, $fileName)
-            )
-        );
-
-        if( !$fileContents ) {
-            throw new \RuntimeException(sprintf("Cannot get json file '%s'", $fileName));
-        }
-
-        //and decode the json
-        return json_decode($fileContents, $associative, JSON_THROW_ON_ERROR);
-    }
-
     #[NoReturn]
     protected function respond404(): void
     {
@@ -61,28 +70,6 @@ class BaseController
         exit(0);
     }
 
-    protected function getConfig(): Config
-    {
-        return new Config();
-    }
-
-    /**
-     * Creates a data file if it does not exist in the FS
-     * @param string $name
-     * @param string|null $contents
-     * @return void
-     */
-    protected function createDataFileIfNotExists(string $name, string $contents = null): void
-    {
-        $filePath = sprintf("%s/%s", DATA_DIR, $name);
-
-        if( !file_exists($filePath) ) {
-            touch($filePath);
-            chmod($filePath, 0777);
-            file_put_contents($filePath, $contents);
-        }
-    }
-
     /**
      * @param array $users
      * @return User[]
@@ -94,23 +81,8 @@ class BaseController
         }, $users);
     }
 
-    protected function dumpDataFile(string $fileName, mixed $data): bool
-    {
-        try {
-            file_put_contents(
-                realpath(
-                    sprintf("%s/%s", DATA_DIR, $fileName)
-                ),
-                $data
-            );
-
-            return true;
-        } catch (\Throwable $e) {
-            return false;
-        }
-    }
-
     /**
+     * Parses the raw PHP input buffer into an array (only if the buffer is a json string)
      * @throws \JsonException
      */
     protected function getInputJson(): array
@@ -120,5 +92,27 @@ class BaseController
             true,
             flags: JSON_THROW_ON_ERROR
         );
+    }
+
+    // --------------------------------------------------------------------------------------------
+
+    public function getDatabaseWrapper(): AppDatabase
+    {
+        return $this->database;
+    }
+
+    protected function getConfig(): Config
+    {
+        return $this->config;
+    }
+
+    public function getEntityHelper(): EntityService
+    {
+        return $this->entityHelper;
+    }
+
+    public function getAuthService(): AuthService
+    {
+        return $this->authService;
     }
 }

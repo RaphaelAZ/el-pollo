@@ -79,24 +79,22 @@ async function handleRegister() {
     const registerSuccess = await userStore.registerAttempt(registerData)
 
     if (registerSuccess) {
-      snackbarStore.showSnackbar({
-        message: 'Connexion réussie! Vous allez être redirigé vers la page d\'accueil dans quelques secondes.',
-        status: SnackBarStatus.SUCCESS,
-        timer: 5000,
-      })
+      const credentials: LoginData = {
+        email: email.value,
+        password: password.value,
+      }
 
-      setTimeout(() => {
-        const credentials: LoginData = {
-          email: email.value,
-          password: password.value,
+      userStore.loginAttempt(credentials).then((resp: boolean) => {
+        if(resp) {
+          snackbarStore.showSnackbar({
+            message: "Connexion réussie! Vous allez être redirigé vers la page d'accueil dans quelques secondes.",
+            status: SnackBarStatus.SUCCESS,
+            timer: 5000,
+          })
+
+          router.push('/home')
         }
-
-        userStore.loginAttempt(credentials).then((resp: boolean) => {
-          if(resp) {
-            router.push('/home')
-          }
-        })
-      }, 5000)
+      })
 
     } else {
       snackbarStore.showSnackbar({
