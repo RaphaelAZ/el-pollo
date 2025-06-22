@@ -13,5 +13,17 @@ services:
       - ./docker/volumes/db:/data/db
       - ./docker/start/db/:/docker-entrypoint-initdb.d/
 
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: php_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mongo
+
 volumes:
   mongodata:

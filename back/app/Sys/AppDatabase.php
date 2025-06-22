@@ -21,8 +21,8 @@ class AppDatabase
 
     // Prevent cloning & unserialization
 
-    private function __clone() {}
-    private function __wakeup() {}
+    public function __clone() {}
+    public function __wakeup() {}
 
     public static function getInstance(): AppDatabase
     {
@@ -43,7 +43,7 @@ class AppDatabase
             $_ENV["MONGO_USERNAME"],
             $_ENV["MONGO_PASSWORD"],
             $_ENV["MONGO_HOST"],
-            $_ENV["MONGO_PORT"],
+            27017,
             $_ENV["MONGO_DB"]
         );
     }
