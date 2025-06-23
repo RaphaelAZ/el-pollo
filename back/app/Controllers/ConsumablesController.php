@@ -35,8 +35,6 @@ class ConsumablesController extends BaseController
             ]);
 
         } catch (\Throwable $e) {
-            var_dump($e);
-
             $this->respondJson([
                 "message" => "Erreur inconnue lors de la récupération de tous nos consommables. Veuillez réessayer."
             ], 500);

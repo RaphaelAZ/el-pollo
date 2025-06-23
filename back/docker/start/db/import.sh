@@ -29,6 +29,6 @@ mongosh --username "$MONGO_INITDB_ROOT_USERNAME" \
       --authenticationDatabase "admin" \
       --eval "
         db = db.getSiblingDB('$MONGO_INITDB_DATABASE');
-        db.createCollection('users');
+        db.createCollection('user');
         db.createCollection('orders');
       "

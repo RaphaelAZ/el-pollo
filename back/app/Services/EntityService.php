@@ -11,6 +11,7 @@ class EntityService
 {
     /**
      * Converts a single burger BSON to a response-safe array (no custom objects)
+     * @param BSONDocument $burger
      * @return array
      */
     public function burgerBsonToSafeArray(BSONDocument $burger): array

@@ -4,18 +4,18 @@
 const props = defineProps({
   visible: {
     type: Boolean,
-    default: false,
-    required: false
+    required: false,
+    default: () => false,
   },
   size: {
     type: Number,
     required: false,
-    default: 100
+    default: () => 100
   },
   text: {
     type: String,
     required: false,
-    default: 'Chargement...'
+    default: () => 'Chargement...'
   }
 })
 </script>

@@ -6,30 +6,29 @@ import { useBasketStore } from '@/stores/basketStore.ts'
 import { ref } from 'vue'
 import { useSnackbarStore } from '@/stores/snackBarStore.ts'
 import { SnackBarStatus } from '@/models/snackBarParams.ts'
-import { useOrdersHistoryStore } from '@/stores/ordersHistoryStore.ts'
+import { useOrderStore } from '@/stores/orderStore.ts'
 import router from '@/router'
 
 const basketStore = useBasketStore()
 const snackbarManager = useSnackbarStore()
-const orderHistoryStore = useOrdersHistoryStore()
+const orderStore = useOrderStore()
 
 const isPageLoading = ref<boolean>(false)
 
-const handleOrderPaid = (formData: OrderPayValues): void => {
+const handleOrderPaid = async (formData: OrderPayValues): Promise<void> => {
   isPageLoading.value = true
 
-  basketStore
-    .sendOrderToApi(formData)
-    .then(() => {
-      const order = {
-        items: basketStore.basket,
-        place: formData,
-        orderedAt: new Date()
-      } as PaidOrder
+  const orderFormData = {
+    items: basketStore.basket,
+    place: formData,
+    orderedAt: new Date()
+  } as PaidOrder
 
-      orderHistoryStore.insertOrder(order)
+  await orderStore
+    .publishOrder(orderFormData)
+    .then((r) => {
+      console.log(r)
       basketStore.resetBasket()
-
       router.push('/checkout/confirm')
     })
     .catch((e) => {

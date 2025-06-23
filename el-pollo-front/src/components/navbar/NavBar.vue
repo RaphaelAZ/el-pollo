@@ -95,7 +95,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useBasketStore } from '@/stores/basketStore.ts'
-import { useOrdersHistoryStore } from '@/stores/ordersHistoryStore.ts'
+import { useOrderStore } from '@/stores/orderStore.ts'
 import NavbarItem from '@/components/navbar/NavbarItem.vue'
 import { useUserStore } from '@/stores/userStore';
 
@@ -103,7 +103,7 @@ const isExpanded = ref(false);
 const userStore = useUserStore();
 
 const basketStore = useBasketStore()
-const previousOrderStore = useOrdersHistoryStore()
+const previousOrderStore = useOrderStore()
 </script>
 
 <style lang="scss" scoped>

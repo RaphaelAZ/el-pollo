@@ -39,6 +39,8 @@
         </v-row>
       </v-form>
   </v-container>
+
+  <loading-dialog :visible="isLoading" />
 </template>
 
 <script lang="ts" setup>
@@ -49,6 +51,7 @@ import type { LoginData, RegisterData } from '@/models/user'
 import { SnackBarStatus } from '@/models/snackBarParams'
 import { useUserStore } from '@/stores/userStore'
 import { useSnackbarStore } from '@/stores/snackBarStore'
+import LoadingDialog from '@/components/common/LoadingDialog.vue'
 
 const userStore = useUserStore()
 const snackbarStore = useSnackbarStore()
@@ -59,6 +62,8 @@ const password = ref('')
 const confirmPassword = ref('')
 const confirmPasswordFieldRef = ref();
 const valid = ref(false)
+
+const isLoading = ref<boolean>(false)
 
 const confirmRules = computed(() => confirmPasswordRules(password));
 
@@ -76,6 +81,8 @@ async function handleRegister() {
       username: username.value
     }
 
+    isLoading.value = true
+
     const registerSuccess = await userStore.registerAttempt(registerData)
 
     if (registerSuccess) {
@@ -84,7 +91,7 @@ async function handleRegister() {
         password: password.value,
       }
 
-      userStore.loginAttempt(credentials).then((resp: boolean) => {
+      await userStore.loginAttempt(credentials).then((resp: boolean) => {
         if(resp) {
           snackbarStore.showSnackbar({
             message: "Connexion réussie! Vous allez être redirigé vers la page d'accueil dans quelques secondes.",
@@ -94,6 +101,8 @@ async function handleRegister() {
 
           router.push('/home')
         }
+      }).finally(() => {
+        isLoading.value = false
       })
 
     } else {
@@ -102,7 +111,10 @@ async function handleRegister() {
         status: SnackBarStatus.ERROR,
         timer: 5000,
       })
+
+      isLoading.value = false
     }
+
   }
 }
 </script>

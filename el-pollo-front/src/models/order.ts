@@ -12,7 +12,9 @@ export interface OrderPayValues {
 export interface PaidOrder {
   items: (Burger|Drink)[],
   place: OrderPayValues,
+}
 
-  uuid?: string,
-  orderedAt: Date,
+export interface PreviousPaidOrder extends PaidOrder {
+  uid: string,
+  orderedAt: string
 }

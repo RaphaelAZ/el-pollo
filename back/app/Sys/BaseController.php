@@ -5,6 +5,7 @@ namespace App\Sys;
 use App\Classes\Entity\User;
 use App\Services\AuthService;
 use App\Services\EntityService;
+use App\Services\OrderService;
 use JetBrains\PhpStorm\NoReturn;
 
 class BaseController
@@ -14,6 +15,8 @@ class BaseController
     private EntityService $entityHelper;
 
     private AuthService $authService;
+
+    private OrderService $orderService;
 
     private Config $config;
 
@@ -29,8 +32,8 @@ class BaseController
         //services and helpers
         $this->entityHelper = new EntityService();
         $this->authService = new AuthService($this->config, $this->database);
+        $this->orderService = new OrderService();
     }
-
 
 
     #[NoReturn]
@@ -114,5 +117,10 @@ class BaseController
     public function getAuthService(): AuthService
     {
         return $this->authService;
+    }
+
+    public function getOrderService(): OrderService
+    {
+        return $this->orderService;
     }
 }

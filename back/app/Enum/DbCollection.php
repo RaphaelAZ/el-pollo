@@ -11,5 +11,5 @@ enum DbCollection: string
     case Drinks = "drinks";
     case Ingredients = "ingredients";
     case Orders = "orders";
-    case User = "User";
+    case User = "user";
 }

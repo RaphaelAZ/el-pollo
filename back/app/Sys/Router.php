@@ -6,6 +6,7 @@ use App\contracts\SysInitContract;
 use App\Controllers\AuthController;
 use App\Controllers\BurgerController;
 use App\Controllers\ConsumablesController;
+use App\Controllers\OrderController;
 use \Bramus\Router\Router as WrappedRouter;
 
 class Router implements SysInitContract
@@ -27,6 +28,8 @@ class Router implements SysInitContract
 
             $this->lazyRouter->post("/login", $this->getRouterString(AuthController::class, 'login'));
             $this->lazyRouter->post("/register", $this->getRouterString(AuthController::class, 'register'));
+
+            $this->lazyRouter->post('/order/new', $this->getRouterString(OrderController::class, 'newOrder'));
         });
 
         $this->lazyRouter->run();

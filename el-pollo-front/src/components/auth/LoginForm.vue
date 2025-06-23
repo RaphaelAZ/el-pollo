@@ -30,6 +30,8 @@
       </v-btn>
     </v-form>
   </v-container>
+
+  <loading-dialog :visible="isLoading" />
 </template>
 
 <script lang="ts" setup>
@@ -40,6 +42,7 @@ import { useSnackbarStore } from '@/stores/snackBarStore'
 import { useUserStore } from '@/stores/userStore'
 import { emailRules, passwordRules } from '@/utils/rulesUtils'
 import { ref } from 'vue'
+import LoadingDialog from '@/components/common/LoadingDialog.vue'
 
 const snackBar = useSnackbarStore()
 const userStore = useUserStore()
@@ -48,6 +51,8 @@ const email = ref('')
 const password = ref('')
 const isFormValid = ref(false)
 
+const isLoading = ref<boolean>(false)
+
 const handleLogin = async () => {
   if (isFormValid.value) {
     const loginData: LoginData = {
@@ -55,23 +60,32 @@ const handleLogin = async () => {
       password: password.value,
     }
 
-    await userStore.loginAttempt(loginData).then((response: boolean) => {
-      if (response) {
-        router.push('/home')
+    isLoading.value = true
 
-        snackBar.showSnackbar({
-          message: `Identifiants corrects. Bienvenue, ${userStore.username}`,
-          status: SnackBarStatus.SUCCESS,
-        })
+    userStore.loginAttempt(loginData)
+      .then((response: boolean) => {
+        if (response) {
+          router.push('/home')
 
-      } else {
-        snackBar.showSnackbar({
-          message: "Nom d'utilisateur ou mot de passe incorrect. Veuillez réessayer.",
-          status: SnackBarStatus.ERROR,
-          timer: 5000,
-        })
-      }
-    })
+          snackBar.showSnackbar({
+            message: `Identifiants corrects. Bienvenue, ${userStore.username}`,
+            status: SnackBarStatus.SUCCESS,
+          })
+
+        } else {
+          snackBar.showSnackbar({
+            message: "Nom d'utilisateur ou mot de passe incorrect. Veuillez réessayer.",
+            status: SnackBarStatus.ERROR,
+            timer: 5000,
+          })
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
+      .finally(() => {
+        isLoading.value = false
+      })
   }
 }
 </script>

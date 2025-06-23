@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useOrdersHistoryStore } from '@/stores/ordersHistoryStore.ts'
+import { useOrderStore } from '@/stores/orderStore.ts'
 import SinglePaidOrder from '@/components/order/SinglePaidOrder.vue'
 
-const ordersHistoryStore = useOrdersHistoryStore()
+const ordersHistoryStore = useOrderStore()
 
 </script>
 

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import type { Burger, Drink } from '@/models/consumable'
-import type { OrderPayValues } from '@/models/order.ts'
 
 interface BasketState {
     basket: Array<Burger | Drink>
@@ -79,27 +78,6 @@ export const useBasketStore = defineStore('basket', {
 
       return rawValue
     },
-
-    /**
-     * Sends the order to the back-end
-     * @param formData
-     */
-    sendOrderToApi(formData: OrderPayValues): Promise<boolean> {
-
-      return new Promise((resolve, reject) => {
-        const apiTimeout = Math.floor( (Math.random() * 3600) + 1500 )
-
-        //80% chance to resolve
-        setTimeout(() => {
-          if( Math.random() <= 0.8 ) {
-            resolve(true)
-          } else {
-            reject(false)
-          }
-        }, apiTimeout)
-      })
-
-    }
   },
   getters: {
     activeBasket: (state) => state.basket,
