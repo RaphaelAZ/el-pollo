@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Classes\Entity\User;
 use App\Enum\DbCollection;
 use App\Sys\AppDatabase;
 use App\Sys\Config;
@@ -26,7 +27,7 @@ readonly class AuthService
     /**
      * @throws RandomException
      */
-    public function generateToken(array $data): UnencryptedToken
+    public function generateToken(array $data, User $user): UnencryptedToken
     {
         $tokenBuilder = Builder::new(new JoseEncoder(), ChainedFormatter::default());
         $algorithm    = new Sha256();
@@ -37,7 +38,10 @@ readonly class AuthService
         $token = $tokenBuilder
             ->issuedBy('https://back.el-pollo.com')
             ->issuedAt($now)
-            ->canOnlyBeUsedAfter($now->modify('+1 hour'));
+            ->canOnlyBeUsedAfter($now)
+            ->expiresAt($now->modify('+2 hours'))
+            ->relatedTo((string) $user->getId())
+        ;
 
         foreach ($data as $claimKey => $claimValue) {
             $token->withClaim($claimKey, $claimValue);

@@ -39,7 +39,7 @@ class AuthController extends BaseController
             if( !$targetUserDocument instanceof BSONDocument ) {
                 $this->respondJson([
                     'message' => "Email ou mot de passe incorrect."
-                ], 401);
+                ], 403);
             }
 
             //convert to entity
@@ -48,7 +48,7 @@ class AuthController extends BaseController
             //generate a JWT token
             $token = $authService->generateToken([
                 'user' => $targetUser->toArray(),
-            ]);
+            ], $targetUser);
 
             //return the token and the user data
             $this->respondJson([
