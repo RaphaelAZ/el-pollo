@@ -54,7 +54,7 @@
           :is-parent-expanded="isExpanded"
           to="/order/history"
           icon="emojione:hourglass-not-done"
-          :condition="previousOrderStore.previousOrders.length > 0"
+          :condition="userStore.isLoggedIn"
         />
 
         <navbar-item
@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { useBasketStore } from '@/stores/basketStore.ts'
 import { useOrderStore } from '@/stores/orderStore.ts'
 import NavbarItem from '@/components/navbar/NavbarItem.vue'
@@ -103,7 +103,6 @@ const isExpanded = ref(false);
 const userStore = useUserStore();
 
 const basketStore = useBasketStore()
-const previousOrderStore = useOrderStore()
 </script>
 
 <style lang="scss" scoped>

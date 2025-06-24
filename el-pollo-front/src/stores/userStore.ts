@@ -75,7 +75,7 @@ export const useUserStore = defineStore('user', {
   },
   getters: {
     activeUser: (state) => state.username,
-    isLoggedIn: (state): boolean => !!state.username && !!state.email
+    isLoggedIn: (state): boolean => !!state.jwt
   },
 })
 

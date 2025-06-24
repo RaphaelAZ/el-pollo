@@ -25,7 +25,7 @@
     <v-row>
       <v-col cols="4">
         <home-link-card
-          image="https://jacksandwaffles.nl/wp-content/uploads/2024/01/WhatsApp-Image-2024-02-01-at-13.23.18-2.jpeg"
+          :carousel="allBurgerPhotos"
           title="Burgers"
         >
           <v-card-actions>
@@ -41,7 +41,7 @@
       <v-col cols="4">
         <home-link-card
           title="Boissons"
-          image="https://www.thecocktaildb.com/images/media/drink/8cl9sm1582581761.jpg"
+          :carousel="allDrinksPhotos"
         >
           <v-card-actions>
             <v-btn color="info" to="/drinks">
@@ -101,8 +101,6 @@ const allDrinksPhotos = [
   'https://www.thecocktaildb.com/images/media/drink/20d63k1504885263.jpg',
   'https://www.thecocktaildb.com/images/media/drink/ssqpyw1472719844.jpg'
 ]
-
-
 </script>
 
 <style scoped>

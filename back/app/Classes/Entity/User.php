@@ -5,6 +5,7 @@ namespace App\Classes\Entity;
 use App\Contracts\Arrayable;
 use App\Contracts\Jsonable;
 use MongoDB\BSON\ObjectId;
+use MongoDB\Model\BSONDocument;
 
 class User implements Arrayable, Jsonable
 {
@@ -32,6 +33,16 @@ class User implements Arrayable, Jsonable
             $data['email'] ?? null,
             $data['password'] ?? null,
             $data['username'] ?? null,
+        );
+    }
+
+    public static function fromBson(BSONDocument $document): User
+    {
+        return new User(
+            email: $document->offsetGet("email"),
+            password: $document->offsetGet('password'),
+            username: $document->offsetGet('username'),
+            id: $document->offsetGet('_id')
         );
     }
 

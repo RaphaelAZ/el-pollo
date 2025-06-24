@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { computed, type PropType } from 'vue'
-import type { PaidOrder } from '@/models/order.ts'
+import type { PreviousPaidOrder } from '@/models/order.ts'
 import { sIfCount } from '@/utils/string-utils.ts'
 import type { Consumable } from '@/models/consumable.ts'
 import { getTotalForItem } from '@/utils/consumable-utils.ts'
 
 const props = defineProps({
   order: {
-    type: Object as PropType<PaidOrder>,
+    type: Object as PropType<PreviousPaidOrder>,
     required: true
   }
 })
 
 const computedOrderDate = computed(() => {
-  const orderedAt: Date = props.order.orderedAt
+  const orderedAt: Date = new Date(props.order.orderedAt * 1000)
 
   const date = orderedAt.toLocaleDateString()
   const time = orderedAt.toLocaleTimeString()
@@ -36,12 +36,14 @@ const tableHeader = [
 
 <template>
   <v-card color="info">
-    <v-card-title>Commande #{{ order.uuid }}</v-card-title>
+    <v-card-title>Commande #{{ order.uid }}</v-card-title>
 
     <v-card-subtitle>
       Commandé le {{ computedOrderDate }}
       <Icon icon="mdi:dot" />
       {{ computedNumberOfItems }}
+      <Icon icon="mdi:dot" />
+      <p>Total: {{ order.total }} €</p>
     </v-card-subtitle>
 
     <v-divider></v-divider>

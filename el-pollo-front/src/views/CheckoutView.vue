@@ -26,8 +26,7 @@ const handleOrderPaid = async (formData: OrderPayValues): Promise<void> => {
 
   await orderStore
     .publishOrder(orderFormData)
-    .then((r) => {
-      console.log(r)
+    .then(() => {
       basketStore.resetBasket()
       router.push('/checkout/confirm')
     })

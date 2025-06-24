@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import NavBar from '@/components/navbar/NavBar.vue';
 import SnackBar from '@/components/common/SnackBar.vue'
-import { useUserStore } from '@/stores/userStore';
 import { useConsumableStore } from '@/stores/consumableStore';
 import { useSnackbarStore } from "@/stores/snackBarStore";
 

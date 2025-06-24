@@ -3,10 +3,17 @@
 namespace App\Sys;
 
 use App\Classes\Entity\User;
+use App\Enum\DbCollection;
 use App\Services\AuthService;
 use App\Services\EntityService;
 use App\Services\OrderService;
 use JetBrains\PhpStorm\NoReturn;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
+use Lcobucci\JWT\Token;
+use MongoDB\BSON\ObjectId;
+use MongoDB\Model\BSONDocument;
 
 class BaseController
 {
@@ -95,6 +102,74 @@ class BaseController
             true,
             flags: JSON_THROW_ON_ERROR
         );
+    }
+
+    protected function getTokenStringFromRequest()
+    {
+        //get the token from the request
+        $tokenString = $_SERVER['HTTP_AUTHORIZATION'] ?? ''; // "Bearer <token>"
+
+        if( empty($tokenString) ) {
+            $this->respondOnlyCode(401);
+        }
+
+        // Remove "Bearer " prefix
+        return preg_replace('/^Bearer\s+/', '', $tokenString);
+    }
+
+    protected function getTokenObjectFromString(string $tokenString): Token
+    {
+        $config = Configuration::forSymmetricSigner(
+            new Sha256(),
+            InMemory::plainText($this->getConfig()->getJwtSecret())
+        );
+
+        //parse the data
+        return $config->parser()->parse($tokenString);
+    }
+
+    /**
+     * Combines ``getTokenStringFromRequest```and ``getTokenObjectFromString``
+     * @return Token|null
+     */
+    protected function decodeJwtToken(): ?Token
+    {
+        $rawToken = $this->getTokenStringFromRequest();
+
+        if( empty($rawToken) ) {
+            return null;
+        }
+
+        return $this->getTokenObjectFromString($rawToken);
+    }
+
+    /**
+     * @return User|null
+     */
+    protected function getCurrentUser(): User|null
+    {
+        $token = $this->decodeJwtToken();
+
+        if( empty($token) ) {
+            return null;
+        }
+
+        $userId = new ObjectId($token->claims()->get('sub'));
+
+        $userCollection = $this->getDatabaseWrapper()->getCollection(DbCollection::User);
+        $targetUser = $userCollection->findOne([
+            "_id" => $userId
+        ]);
+
+        if( empty($targetUser) ) {
+            return null;
+        }
+
+        if( is_array($targetUser) ) {
+            return User::fromJson($targetUser);
+        } else {
+            return User::fromBson($targetUser);
+        }
     }
 
     // --------------------------------------------------------------------------------------------

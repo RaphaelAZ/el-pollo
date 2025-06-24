@@ -31,6 +31,7 @@ class Router implements SysInitContract
         $this->lazyRouter->post("/register", $this->getRouterString(AuthController::class, 'register'));
 
         $this->lazyRouter->post('/order/new', $this->getRouterString(OrderController::class, 'newOrder'));
+        $this->lazyRouter->get('/order/old', $this->getRouterString(OrderController::class, 'getPreviousOrders'));
 
         $this->getMiddlewaresRoutes();
 

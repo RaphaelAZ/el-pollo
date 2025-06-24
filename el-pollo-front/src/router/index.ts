@@ -49,11 +49,6 @@ const publicRoutes = [
       component: BuilderView
     },
     {
-      path: '/order/history',
-      name: 'previous-orders',
-      component: OrderHistoryView
-    },
-    {
       path: '/pollo',
       name: 'pollo',
       component: PolloView
@@ -82,6 +77,12 @@ const protectedRoute = [
     path: '/checkout/confirm',
     name: 'checkout-confirm',
     component: OrderConfirmView,
+    beforeEnter: [AuthGuard],
+  },
+  {
+    path: '/order/history',
+    name: 'previous-orders',
+    component: OrderHistoryView,
     beforeEnter: [AuthGuard],
   },
 ];

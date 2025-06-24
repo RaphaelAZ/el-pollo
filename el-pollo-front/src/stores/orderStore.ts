@@ -5,11 +5,10 @@ import { getHttpClient } from '@/plugins/http-client.ts'
 export const useOrderStore = defineStore('ordersHistory', {
   state: (): OrdersHistoryStoreState => {
     return {
-      previousOrders: []
+      previousOrders: [],
     }
   },
   actions: {
-
     /**
      * Vas donner la commande au serveur, qui vas la traiter
      * @param order
@@ -18,7 +17,7 @@ export const useOrderStore = defineStore('ordersHistory', {
       try {
         const response = await getHttpClient().post('api/order/new', order)
 
-        return !!response;
+        return !!response
       } catch (e) {
         console.log(e)
         return false
@@ -28,17 +27,21 @@ export const useOrderStore = defineStore('ordersHistory', {
     /**
      * Vas chercher les dernières commandes de l'utilisateur et les mettre dans le store.
      */
-    async getPreviousOrders(): Promise<PaidOrder|boolean> {
-      try {
-        return await getHttpClient().get('api/orders/old')
-      } catch (e) {
-        console.log(e)
+    async fetchPreviousOrders(): Promise<boolean> {
+      return await getHttpClient().get('api/order/old')
+        .then((r) => {
+          this.previousOrders = r.data as PreviousPaidOrder[]
 
-        return false
-      }
+          return true
+        })
+        .catch((e) => {
+          console.log(e)
+
+          this.previousOrders = []
+          return false
+        })
     },
-
-  }
+  },
 })
 
 export interface OrdersHistoryStoreState {

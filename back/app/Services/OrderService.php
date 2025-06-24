@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use MongoDB\Driver\CursorInterface;
 use Random\RandomException;
 
 class OrderService
@@ -55,5 +56,20 @@ class OrderService
     public function generateOrderId(): string
     {
         return bin2hex(random_bytes(5));
+    }
+
+    /**
+     * @param CursorInterface $orders
+     * @return void
+     */
+    public function ordersBsonToSafeOrderArray(CursorInterface $orders): array
+    {
+        $data = [];
+
+        foreach ($orders as $singleOrder) {
+            $data[] = (array) $singleOrder;
+        }
+
+        return $data;
     }
 }

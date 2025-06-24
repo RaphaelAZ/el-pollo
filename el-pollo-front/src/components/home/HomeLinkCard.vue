@@ -29,9 +29,10 @@ defineProps({
         cycle
         hide-delimiter-background
         hide-delimiters
+        :show-arrows="false"
         v-if="(carousel && carousel.length > 0)"
       >
-        <v-card-item
+        <v-carousel-item
           v-for="(singleImage, key) in carousel"
           :key="key"
           :src="singleImage"

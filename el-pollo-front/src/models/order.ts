@@ -14,7 +14,10 @@ export interface PaidOrder {
   place: OrderPayValues,
 }
 
-export interface PreviousPaidOrder extends PaidOrder {
+export interface PreviousPaidOrder {
+  place: OrderPayValues,
+  items: (Burger|Drink)[],
+  total: number,
   uid: string,
-  orderedAt: string
+  orderedAt: number,
 }

@@ -20,7 +20,7 @@ class AuthMiddleware extends BaseController implements MiddlewareContract
     public function __invoke()
     {
         try {
-            $tokenString = $this->getTokenFromRequest();
+            $tokenString = $this->getTokenStringFromRequest();
 
             $token = $this->checkTokenValidity($tokenString);
 
@@ -39,22 +39,6 @@ class AuthMiddleware extends BaseController implements MiddlewareContract
         } catch (\Throwable $e) {
             $this->respondOnlyCode(500);
         }
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getTokenFromRequest(): string|null
-    {
-        //get the token from the request
-        $tokenString = $_SERVER['HTTP_AUTHORIZATION'] ?? ''; // "Bearer <token>"
-
-        if( empty($tokenString) ) {
-            $this->respondOnlyCode(401);
-        }
-
-        // Remove "Bearer " prefix
-        return preg_replace('/^Bearer\s+/', '', $tokenString);
     }
 
     /**
