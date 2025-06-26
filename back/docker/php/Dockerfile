@@ -12,15 +12,13 @@ RUN apt-get update && apt-get install -y \
 # Install MongoDB extension (required)
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
+# Install composer and dependencies of the project
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY composer.json .
+
+RUN composer install
+
 WORKDIR /app
-
-# Copy composer files and install dependencies
-COPY composer.json composer.lock ./
-
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    && php -r "unlink('composer-setup.php');" \
-    && composer install --no-dev --optimize-autoloader
 
 # Copy the rest of the code
 COPY . .
@@ -28,4 +26,4 @@ COPY . .
 EXPOSE 8000
 
 # Start PHP built-in server at container start
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public/"]
+CMD ["composer", "run", "start"]

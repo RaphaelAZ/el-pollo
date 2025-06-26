@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useConsumableStore } from '@/stores/consumableStore.ts'
 import { onMounted } from 'vue'
-import SingleDrinkCard from '@/components/drinks/SingleDrinkCard.vue'
 import ListItemCard from '@/components/lists/ListItemCard.vue'
 import { ConsumableType } from '@/models/consumable'
 
@@ -18,7 +17,7 @@ onMounted(() => {
 
   <template v-if="consumableStore.allDrinks">
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-gap: 2rem">
-      <ListItemCard 
+      <ListItemCard
         v-for="(drink, key) in consumableStore.allDrinks"
         :key="key"
         :item="drink"
