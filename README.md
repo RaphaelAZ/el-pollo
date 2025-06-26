@@ -52,7 +52,7 @@ DB_CONTAINER_NAME="db_container"
 PGADMIN_MAIL="admin@elpollo.com"
 PGADMIN_PW="admin" # Please change for a stronger password !
 
-JWT_SECRET="(your token here)"
+JWT_SECRET="YOUR_SUPER_SECRET_JWT_KEY" #Please use JWT_KEY with a min length of 20 characters !
 ```
 
 Then, run the following commands (from the root of the project):
